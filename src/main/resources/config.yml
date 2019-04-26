@@ -8,7 +8,7 @@ apiEndpoint: ''
 # API key for your server
 apikey: ''
 
-# WorldGuard regions where egg hunts are taking place
+# WorldGuard regions where egg hunts are taking place. Use LOWER-CASE letters in world and region names.
 hunts:
   world:
     region1:

@@ -62,7 +62,10 @@ public class EasterEggHunt extends JavaPlugin {
 
                 // Get regions
                 for (String regionName : regions) {
-                    if(regionManager.hasRegion(regionName)) {
+                    // Check if region is enabled in config file
+                    boolean regionEnabled = config.getBoolean("hunts." + worldName + "." + regionName + ".enabled");
+                    // If enabled and exists, create hunt object and store reference in ArrayLit
+                    if(regionEnabled && regionManager.hasRegion(regionName)) {
                         ProtectedRegion region = regionManager.getRegion(regionName);
                         Hunt hunt = new Hunt(world, region);
                         getLogger().info("Created a new hunt for region " + regionName + " in world " + worldName);
