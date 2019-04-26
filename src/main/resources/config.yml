@@ -1,0 +1,20 @@
+# EasterEggHunt Configuration File
+
+eggHuntEnabled: false
+
+# The API endpoint without a trailing slash
+apiEndpoint: ''
+
+# API key for your server
+apikey: ''
+
+# WorldGuard regions where egg hunts are taking place
+hunts:
+  world:
+    region1:
+      enabled: true
+    region2:
+      enabled: true
+  world_the_end:
+    region3:
+      enabled: true
