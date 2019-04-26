@@ -57,7 +57,7 @@ public class EasterEggHunt extends JavaPlugin {
             World world = getServer().getWorld(worldName);
 
             if(null != world) {
-                // Get region manager for this world
+                // Get WG region manager for this world
                 RegionManager regionManager = getRegionContainer().get(BukkitAdapter.adapt(world));
 
                 // Get regions
@@ -68,7 +68,6 @@ public class EasterEggHunt extends JavaPlugin {
                     if(regionEnabled && regionManager.hasRegion(regionName)) {
                         ProtectedRegion region = regionManager.getRegion(regionName);
                         Hunt hunt = new Hunt(world, region);
-                        getLogger().info("Created a new hunt for region " + regionName + " in world " + worldName);
                         getHunts().add(hunt);
                     } else {
                         regions.remove(regionName);
@@ -80,6 +79,11 @@ public class EasterEggHunt extends JavaPlugin {
                     getLogger().info("Loaded " + regions.size() + " egg hunts in world \"" + world.getName() + "\"");
                 }
             }
+        }
+        if(!getHunts().isEmpty()) {
+            // @TODO Start the egg hunts
+        } else {
+            getLogger().info("No egg hunts are enabled in the plugin's config.yml file, or it contains spelling mistakes.");
         }
     }
 
