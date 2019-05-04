@@ -9,9 +9,7 @@ public class Hunt {
         this.region = region;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+    public boolean isEnabled() { return enabled; }
 
     private World world;
     private ProtectedRegion region;

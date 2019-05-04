@@ -2,7 +2,7 @@ package us.shirecraft.easteregghunt;
 
 public class RainbowEgg extends Egg {
     public RainbowEgg() {
-        super(30, 50);
+        super("Rainbow",30, 50);
         setTexture(RAINBOW_EGG_TEXTURE);
         setPlayerUuid(RAINBOW_EGG_PLAYER_UUID);
     }

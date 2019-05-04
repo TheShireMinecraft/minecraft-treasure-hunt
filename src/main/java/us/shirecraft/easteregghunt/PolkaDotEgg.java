@@ -2,7 +2,7 @@ package us.shirecraft.easteregghunt;
 
 public class PolkaDotEgg extends Egg {
     public PolkaDotEgg() {
-        super(30, 50);
+        super("Polka Dot",30, 50);
         setTexture(POLKADOT_EGG_TEXTURE);
         setPlayerUuid(POLKADOT_EGG_PLAYER_UUID);
     }

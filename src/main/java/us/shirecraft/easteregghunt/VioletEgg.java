@@ -2,7 +2,7 @@ package us.shirecraft.easteregghunt;
 
 public class VioletEgg extends Egg {
     public VioletEgg() {
-        super(10, 30);
+        super("Violet",10, 30);
         setTexture(VOILET_EGG_TEXTURE);
         setPlayerUuid(VIOLET_EGG_PLAYER_UUID);
     }

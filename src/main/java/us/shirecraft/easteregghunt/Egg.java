@@ -1,11 +1,35 @@
 package us.shirecraft.easteregghunt;
 
+import de.tr7zw.itemnbtapi.NBTCompound;
+import de.tr7zw.itemnbtapi.NBTItem;
+import de.tr7zw.itemnbtapi.NBTListCompound;
+import de.tr7zw.itemnbtapi.NBTType;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class Egg {
-    public Egg(int value, int frequency) {
+public class Egg implements Comparable {
+    public Egg(String name, int value, int frequency) {
+        item = new ItemStack(Material.PLAYER_HEAD);
+        nbtItem = new NBTItem(item);
+        display = nbtItem.addCompound("display");
+        skull = nbtItem.addCompound("SkullOwner");
+        texture = skull.addCompound("Properties").getList("textures", NBTType.NBTTagCompound).addCompound();
+        nbtItem.setBoolean("Unbreakable", true);
+        setName(name);
         setValue(value);
         setFrequency(frequency);
+    }
+
+    public void setPlayerUuid(String playerUuid) {
+        this.playerUuid = playerUuid;
+        skull.setString("Id", playerUuid);
+
+    }
+
+    public void setName(String name) {
+        display.setString("Name", name + " Egg");
+        display.getList("Lore", NBTType.NBTTagString).addString("It's an egg!");
+        this.name = name;
     }
 
     public void setValue(int value) {
@@ -16,21 +40,28 @@ public class Egg {
         this.frequency = frequency;
     }
 
-    public void setTexture(String texture) {
-        this.texture = texture;
+    public void setTexture(String texture) { this.texture.setString("Value", texture); }
+
+    public ItemStack getItem() {
+        return this.nbtItem.getItem();
     }
 
-    public void setPlayerUuid(String playerUuid) {
-        this.playerUuid = playerUuid;
+    @Override
+    public String toString() {
+        return this.name + " Egg";
     }
 
-    public void setDroppedItem(ItemStack item) {
-        this.droppedItem = item;
+    public int compareTo(Object o) {
+        return ((Egg)o).value>this.value?-1:1;
     }
 
     private int value;
     private int frequency;
-    private String texture;
     private String playerUuid;
-    private ItemStack droppedItem;
+    private NBTItem nbtItem;
+    private NBTCompound display;
+    private NBTCompound skull;
+    private NBTListCompound texture;
+    private ItemStack item;
+    private String name;
 }

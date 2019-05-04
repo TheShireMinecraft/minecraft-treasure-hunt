@@ -2,7 +2,7 @@ package us.shirecraft.easteregghunt;
 
 public class SunflowerEgg extends Egg {
     public SunflowerEgg() {
-        super(20, 10);
+        super("Sunflower",20, 10);
         setTexture(SUNFLOWER_EGG_TEXTURE);
         setPlayerUuid(SUNFLOWER_EGG_PLAYER_UUID);
     }
