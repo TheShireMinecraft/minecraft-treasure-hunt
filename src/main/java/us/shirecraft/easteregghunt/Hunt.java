@@ -11,6 +11,11 @@ public class Hunt {
 
     public boolean isEnabled() { return enabled; }
 
+    @Override
+    public String toString() {
+        return region.getId() + " (" + world.getName() + ")";
+    }
+
     private World world;
     private ProtectedRegion region;
     private boolean enabled;
