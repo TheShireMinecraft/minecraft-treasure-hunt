@@ -1,9 +1,13 @@
 package us.shirecraft.easteregghunt;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -41,12 +45,22 @@ public class Hunt {
             randomPointAttempts = 0;
             // Spawn an egg in this hunt
             Egg egg = (Egg) chooseEgg().getDeclaredConstructor().newInstance();
-            getEggs().add(egg);
             plugin.getLogger().info("An egg has been chosen! " + egg);
-
             BlockVector3 randomPoint = randomPoint(region);
+
             if(null != randomPoint) {
+                Location dropLocation = BukkitAdapter.adapt(world,randomPoint);
+                ItemStack eggItem = egg.getItem();
+
+                getEggs().add(egg);
+
                 plugin.getLogger().info("Spawning egg at: " + randomPoint);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        world.dropItemNaturally(dropLocation, eggItem);
+                    }
+                }.runTask(plugin);
             }
         } else {
             plugin.getLogger().info("Too many eggs!");
@@ -68,24 +82,22 @@ public class Hunt {
         int xMax = mRegion.getMaximumPoint().getBlockX();
         int zMin = mRegion.getMinimumPoint().getBlockZ();
         int zMax = mRegion.getMaximumPoint().getBlockZ();
-        System.out.println("Maxima: (" + xMax + ", " + zMax + ")");
-        System.out.println("Minima: (" + xMin + ", " + zMin + ")");
+
         int randX = getRandom(xMin, xMax);
         int randZ = getRandom(zMin, zMax);
-        System.out.println("Point created: (" + randX + ", " + (world.getMaxHeight()-1) + ", " + randZ + ")");
+
         BlockVector3 randPoint = BlockVector3.at(randX, (world.getMaxHeight()-1), randZ);
         boolean isInRegion = regionManager.getApplicableRegionsIDs(randPoint).contains(mRegion.getId());
+
         if(isInRegion) {
-            System.out.println("Point is in region!");
             return randPoint;
         }
-        System.out.println("Point is NOT in region!");
+
         randomPointAttempts++;
-        System.out.println("Attempts so far: " + randomPointAttempts);
         if(randomPointAttempts == MAX_RANDOM_POINT_ATTEMPTS) {
-            System.out.println("Max attempts reached");
             return null;
         }
+
         return randomPoint(mRegion);
     }
 
@@ -102,5 +114,5 @@ public class Hunt {
     private Random random;
     private int randomPointAttempts = 0;
     private final int MAX_EGGS_IN_HUNT = 10;
-    private final int MAX_RANDOM_POINT_ATTEMPTS = 25;
+    private final int MAX_RANDOM_POINT_ATTEMPTS = 20;
 }

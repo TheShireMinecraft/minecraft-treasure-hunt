@@ -1,8 +1,10 @@
 package us.shirecraft.easteregghunt;
 
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.lang.reflect.InvocationTargetException;
 
-public class HuntTask implements Runnable {
+public class HuntTask extends BukkitRunnable {
 
     private final EasterEggHunt plugin;
     private final Hunt hunt;
