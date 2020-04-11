@@ -1,12 +1,12 @@
 main: us.shirecraft.easteregghunt.EasterEggHunt
 name: EasterEggHunt
-version: 0.1.0-SNAPSHOT
+version: 0.1.1-SNAPSHOT
 description: "Easter egg hunt using WorldGuard regions"
 api-version: 1.13
 load: POSTWORLD
 author: Blitheness
 website: shirecraft.us
-depend: [WorldGuard]
+depend: [NBTAPI,WorldGuard]
 prefix: EggHunt
 commands:
   egghunt:
