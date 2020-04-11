@@ -1,9 +1,8 @@
 package us.shirecraft.easteregghunt;
 
-import de.tr7zw.itemnbtapi.NBTCompound;
-import de.tr7zw.itemnbtapi.NBTItem;
-import de.tr7zw.itemnbtapi.NBTListCompound;
-import de.tr7zw.itemnbtapi.NBTType;
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.NBTListCompound;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,7 +12,7 @@ public class Egg implements Comparable {
         nbtItem = new NBTItem(item);
         display = nbtItem.addCompound("display");
         skull = nbtItem.addCompound("SkullOwner");
-        texture = skull.addCompound("Properties").getList("textures", NBTType.NBTTagCompound).addCompound();
+        texture = skull.addCompound("Properties").getCompoundList("textures").addCompound();
         nbtItem.setBoolean("Unbreakable", true);
         setName(name);
         setValue(value);
@@ -28,7 +27,7 @@ public class Egg implements Comparable {
 
     public void setName(String name) {
         display.setString("Name", name + " Egg");
-        display.getList("Lore", NBTType.NBTTagString).addString("It's an egg!");
+        display.getStringList("Lore").add("It's an egg!");
         this.name = name;
     }
 
