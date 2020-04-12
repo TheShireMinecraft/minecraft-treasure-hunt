@@ -33,6 +33,7 @@ public class EasterEggHunt extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
         } else {
             // Initialise egg hunts
+            new EggListener(this);
             initialiseHunts();
         }
     }
@@ -98,13 +99,16 @@ public class EasterEggHunt extends JavaPlugin {
         eggs.put(RainbowEgg.class, 20);
         eggs.put(SunflowerEgg.class, 15);
         eggs.put(VioletEgg.class, 30);
+
         float sum = (float) eggs.values().stream().mapToDouble(i->i).sum();
         data         = new HashMap<>();
         balancedData = new HashMap<>();
+
         data.put(PolkaDotEgg.class,  50f/sum);
         data.put(RainbowEgg.class,   20f/sum);
         data.put(SunflowerEgg.class, 15f/sum);
         data.put(VioletEgg.class,    30f/sum);
+
         float balancedSum = 0f;
         for(Class eggClass : eggs.keySet()) {
             balancedSum += data.get(eggClass);

@@ -24,7 +24,9 @@ public class Hunt {
         this.regionManager = regionManager;
     }
 
-    public boolean isEnabled() { return enabled; }
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     public ArrayList<Egg> getEggs() {
         return this.eggs;
@@ -43,7 +45,6 @@ public class Hunt {
         plugin.getLogger().info("Ticking hunt: " + this);
         if(getEggs().size() <= MAX_EGGS_IN_HUNT) {
             randomPointAttempts = 0;
-            // Spawn an egg in this hunt
             Egg egg = (Egg) chooseEgg().getDeclaredConstructor().newInstance();
             plugin.getLogger().info("An egg has been chosen! " + egg);
             BlockVector3 randomPoint = randomPoint(region);
@@ -113,6 +114,6 @@ public class Hunt {
     private EasterEggHunt plugin;
     private Random random;
     private int randomPointAttempts = 0;
-    private final int MAX_EGGS_IN_HUNT = 10;
+    private final int MAX_EGGS_IN_HUNT = 15;
     private final int MAX_RANDOM_POINT_ATTEMPTS = 20;
 }

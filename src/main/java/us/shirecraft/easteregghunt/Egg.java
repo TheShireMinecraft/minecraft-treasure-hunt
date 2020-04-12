@@ -10,6 +10,7 @@ public class Egg implements Comparable {
     public Egg(String name, int value, int frequency) {
         item = new ItemStack(Material.PLAYER_HEAD);
         nbtItem = new NBTItem(item);
+        nbtItem.setString("EasterEgg", name);
         display = nbtItem.addCompound("display");
         skull = nbtItem.addCompound("SkullOwner");
         texture = skull.addCompound("Properties").getCompoundList("textures").addCompound();
@@ -39,7 +40,9 @@ public class Egg implements Comparable {
         this.frequency = frequency;
     }
 
-    public void setTexture(String texture) { this.texture.setString("Value", texture); }
+    public void setTexture(String texture) {
+        this.texture.setString("Value", texture);
+    }
 
     public ItemStack getItem() {
         return this.nbtItem.getItem();
