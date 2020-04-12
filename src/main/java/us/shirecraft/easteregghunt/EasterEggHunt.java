@@ -5,12 +5,21 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -99,6 +108,8 @@ public class EasterEggHunt extends JavaPlugin {
         eggs.put(RainbowEgg.class, 20);
         eggs.put(SunflowerEgg.class, 15);
         eggs.put(VioletEgg.class, 30);
+        eggs.put(RegularEgg.class, 70);
+        eggs.put(DragonEgg.class, 5);
 
         float sum = (float) eggs.values().stream().mapToDouble(i->i).sum();
         data         = new HashMap<>();
@@ -108,6 +119,8 @@ public class EasterEggHunt extends JavaPlugin {
         data.put(RainbowEgg.class,   20f/sum);
         data.put(SunflowerEgg.class, 15f/sum);
         data.put(VioletEgg.class,    30f/sum);
+        data.put(RegularEgg.class,   70f/sum);
+        data.put(DragonEgg.class,     5f/sum);
 
         float balancedSum = 0f;
         for(Class eggClass : eggs.keySet()) {
@@ -153,6 +166,40 @@ public class EasterEggHunt extends JavaPlugin {
         }
     }
 
+    public boolean sendToWebServer(Player player, final String eggType) {
+        if(!getConfig().getString("apiKey").equals("")) {
+            final String playerUuid = player.getUniqueId().toString();
+            final String playerName = player.getName();
+            Bukkit.getScheduler().runTaskAsynchronously(this, new Runnable() {
+                @Override
+                public void run() {
+                    String payload
+                            = "data={"
+                            + "\"uuid\":\"" + playerUuid + "\","
+                            + "\"name\":\""+ playerName +"\","
+                            + "\"egg\":\"" + eggType + "\""
+                            + "}";
+
+                    StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
+
+                    HttpClient httpClient = HttpClientBuilder.create().build();
+                    HttpPost request = new HttpPost(getConfig().getString("apiEndpoint") + getConfig().getString("apiKey"));
+                    request.setEntity(entity);
+
+                    try {
+                        httpClient.execute(request);
+                    } catch (ClientProtocolException e) {
+                        getLogger().warning(" ! Encountered a ClientProtocolException when attempting to transmit data");
+                    } catch (IOException e) {
+                        getLogger().warning(" ! Encountered an IOException when attempting to transmit data");
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        return false;
+    }
+
     private FileConfiguration config;
     private WorldGuard worldGuard;
     private RegionContainer regionContainer;
@@ -163,5 +210,5 @@ public class EasterEggHunt extends JavaPlugin {
     private HashMap<Class<?>, Float> balancedData;
     private final int  TICKS_PER_SECOND = 20; // in an ideal situation
     private final long TASK_DELAY_TICKS = (long) (TICKS_PER_SECOND * 3);
-    private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 10);
+    private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 9);
 }

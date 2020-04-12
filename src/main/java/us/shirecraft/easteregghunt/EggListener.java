@@ -1,7 +1,10 @@
 package us.shirecraft.easteregghunt;
 
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Instrument;
 import org.bukkit.Material;
+import org.bukkit.Note;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,7 +25,12 @@ public class EggListener implements Listener {
             if(ev.getEntity() instanceof Player) {
                 Player player = (Player) ev.getEntity();
                 NBTItem nbtItem = new NBTItem(is);
-                player.sendMessage("§6 ** You found a " + nbtItem.getString("EasterEgg") + " Egg");
+                String eggType = nbtItem.getString("EasterEgg");
+                player.sendMessage("§6 ** You found a " + eggType + " Egg");
+                player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
+                player.spawnParticle(Particle.SPELL_INSTANT, ev.getItem().getLocation(), 5);
+                ev.getItem().remove();
+                plugin.sendToWebServer(player, eggType);
             }
             ev.setCancelled(true);
         }
