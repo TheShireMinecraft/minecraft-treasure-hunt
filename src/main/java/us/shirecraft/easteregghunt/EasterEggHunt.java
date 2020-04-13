@@ -166,7 +166,7 @@ public class EasterEggHunt extends JavaPlugin {
         }
     }
 
-    public boolean sendToWebServer(Player player, final String eggType) {
+    public boolean sendToWebServer(Player player, final String eggType, final String regionName) {
         if(!getConfig().getString("apiKey").equals("")) {
             final String playerUuid = player.getUniqueId().toString();
             final String playerName = player.getName();
@@ -177,7 +177,8 @@ public class EasterEggHunt extends JavaPlugin {
                             = "data={"
                             + "\"uuid\":\"" + playerUuid + "\","
                             + "\"name\":\""+ playerName +"\","
-                            + "\"egg\":\"" + eggType + "\""
+                            + "\"egg\":\"" + eggType + "\","
+                            + "\"region\":\"" + regionName + "\""
                             + "}";
 
                     StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);

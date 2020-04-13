@@ -32,6 +32,10 @@ public class Egg implements Comparable {
         this.name = name;
     }
 
+    public void setRegionName(String name) {
+        this.nbtItem.setString("EggHuntRegion", name);
+    }
+
     public void setValue(int value) {
         this.value = value;
     }

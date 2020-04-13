@@ -8,12 +8,14 @@
 # --- apiKey ---
 # API key for score tracking for this server
 # --- hunts ---
-# WorldGuard regions where egg hunts are taking place. Use LOWER-CASE letters in world and region names.
+# WorldGuard regions where egg hunts are taking place. Use LOWER-CASE letters in world and region names. Timings are in seconds.
 # For example,
 #   hunts:
 #     world_name:
 #       region_name:
 #         enabled: true
+#         friendly_name: 'Region Name'
+#         delay: 8
 
 eggHuntEnabled: false
 apiEndpoint: ''

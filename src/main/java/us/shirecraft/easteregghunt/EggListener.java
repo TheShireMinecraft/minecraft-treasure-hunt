@@ -42,7 +42,8 @@ public class EggListener implements Listener {
                     player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
                     ev.getItem().getLocation().getWorld().spawnParticle(Particle.SPELL_INSTANT, ev.getItem().getLocation(), 5);
                     ev.getItem().remove();
-                    plugin.sendToWebServer(player, eggType);
+                    String regionName = nbtItem.getString("EggHuntRegion");
+                    plugin.sendToWebServer(player, eggType, regionName);
                 }
             }
             ev.setCancelled(true);

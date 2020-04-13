@@ -38,6 +38,7 @@ public class Hunt {
         if(!enabled) return;
         randomPointAttempts = 0;
         Egg egg = (Egg) chooseEgg().getDeclaredConstructor().newInstance();
+        egg.setRegionName(region.getId());
         BlockVector3 randomPoint = randomPoint(region);
 
         if(null != randomPoint) {
