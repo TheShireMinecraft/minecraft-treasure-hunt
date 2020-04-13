@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Hunt {
@@ -43,13 +42,15 @@ public class Hunt {
 
         if(null != randomPoint) {
             Location dropLocation = BukkitAdapter.adapt(world,randomPoint);
-            ItemStack eggItem = egg.getItem();
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    world.dropItemNaturally(dropLocation, eggItem);
-                }
-            }.runTask(plugin);
+            if(dropLocation.getChunk().isLoaded()) {
+                ItemStack eggItem = egg.getItem();
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        world.dropItemNaturally(dropLocation, eggItem);
+                    }
+                }.runTask(plugin);
+            }
         }
     }
 
