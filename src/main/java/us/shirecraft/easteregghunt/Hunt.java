@@ -5,6 +5,7 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -13,13 +14,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Hunt {
-    public Hunt(EasterEggHunt plugin, World world, RegionManager regionManager, ProtectedRegion region) {
+    public Hunt(EasterEggHunt plugin, World world, RegionManager regionManager, ProtectedRegion region, String huntType) {
         this.plugin = plugin;
         this.world = world;
         this.region = region;
         this.enabled = true;
         this.random = new Random();
         this.regionManager = regionManager;
+        this.huntType = huntType;
     }
 
     public boolean isEnabled() {
@@ -77,7 +79,7 @@ public class Hunt {
         BlockVector3 randPoint = BlockVector3.at(randX, (world.getMaxHeight()-1), randZ);
         boolean isInRegion = regionManager.getApplicableRegionsIDs(randPoint).contains(mRegion.getId());
 
-        if(isInRegion) {
+        if(isInRegion && world.getHighestBlockAt(randX,randZ).getType() != Material.WATER) {
             return randPoint;
         }
 
@@ -101,4 +103,5 @@ public class Hunt {
     private Random random;
     private int randomPointAttempts = 0;
     private final int MAX_RANDOM_POINT_ATTEMPTS = 20;
+    private String huntType;
 }

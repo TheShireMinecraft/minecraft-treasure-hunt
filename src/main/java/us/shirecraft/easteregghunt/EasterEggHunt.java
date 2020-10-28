@@ -20,10 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public class EasterEggHunt extends JavaPlugin {
@@ -83,10 +80,20 @@ public class EasterEggHunt extends JavaPlugin {
                         for (String regionName : regions_tmp) {
                             // Check if region is enabled in config file
                             boolean regionEnabled = config.getBoolean("hunts." + worldName + "." + regionName + ".enabled");
+
                             // If enabled and region is defined in WorldGuard, then create hunt object and store hunt reference in ArrayList
                             if (regionEnabled && regionManager.hasRegion(regionName)) {
+                                // Check type of hunt
+                                String huntType = config.getString("hunts." + worldName + "." + regionName + ".type");
+                                if(null == huntType || huntType.equals("")) {
+                                    String defaultHuntType = config.getString("defaultHuntType");
+                                    huntType = defaultHuntType;
+                                }
+                                if(!Arrays.stream(VALID_HUNT_TYPES).anyMatch(huntType::equals)) {
+                                    huntType = VALID_HUNT_TYPES[0];
+                                }
                                 ProtectedRegion region = regionManager.getRegion(regionName);
-                                Hunt hunt = new Hunt(this, world, regionManager, region);
+                                Hunt hunt = new Hunt(this, world, regionManager, region, huntType);
                                 getHunts().add(hunt);
                             }
                         }
@@ -102,6 +109,9 @@ public class EasterEggHunt extends JavaPlugin {
         }
     }
 
+    /**
+     * This is done badly
+     */
     private void registerEggs() {
         eggs = new HashMap<>();
         eggs.put(PolkaDotEgg.class, 50);
@@ -110,6 +120,7 @@ public class EasterEggHunt extends JavaPlugin {
         eggs.put(VioletEgg.class, 30);
         eggs.put(RegularEgg.class, 70);
         eggs.put(DragonEgg.class, 5);
+        eggs.put(BadEgg.class, 12);
 
         float sum = (float) eggs.values().stream().mapToDouble(i->i).sum();
         data         = new HashMap<>();
@@ -118,6 +129,7 @@ public class EasterEggHunt extends JavaPlugin {
         data.put(PolkaDotEgg.class,  50f/sum);
         data.put(RainbowEgg.class,   20f/sum);
         data.put(SunflowerEgg.class, 15f/sum);
+        data.put(BadEgg.class,       12f/sum);
         data.put(VioletEgg.class,    30f/sum);
         data.put(RegularEgg.class,   70f/sum);
         data.put(DragonEgg.class,     5f/sum);
@@ -212,4 +224,5 @@ public class EasterEggHunt extends JavaPlugin {
     private final int  TICKS_PER_SECOND = 20; // in an ideal situation
     private final long TASK_DELAY_TICKS = (long) (TICKS_PER_SECOND * 3);
     private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 9);
+    private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "christmas"};
 }

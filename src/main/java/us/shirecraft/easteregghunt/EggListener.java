@@ -27,20 +27,34 @@ public class EggListener implements Listener {
                 NBTItem nbtItem = new NBTItem(is);
                 String eggType = nbtItem.getString("EasterEgg");
                 player.sendMessage("§6 ** You found a " + eggType + " Egg");
+                Location eggLocation = ev.getItem().getLocation();
+                World world = eggLocation.getWorld();
                 if(getRandom(1,100) < 6) {
-                    player.sendMessage("§a ** Oh no. The egg hatched before you could collect it!");
-                    Location eggLocation = ev.getItem().getLocation();
-                    World world = eggLocation.getWorld();
+                    player.sendMessage("§a ** The egg hatched before you could collect it!");
                     world.spawnParticle(Particle.EXPLOSION_LARGE, eggLocation, 2);
                     ev.getItem().remove();
+
                     Chicken chicken = (Chicken) world.spawnEntity(eggLocation, EntityType.CHICKEN);
                     chicken.setBaby();
                     chicken.setTicksLived(1);
                     world.spawnParticle(Particle.HEART, chicken.getLocation(), 2);
+                    world.playSound(chicken.getLocation(), Sound.ENTITY_CHICKEN_AMBIENT, 1, 1);
+
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            if(null == chicken || null == world || null == player) {
+                                return;
+                            }
+                            world.spawnParticle(Particle.FLASH, chicken.getLocation(), 2);
+                            world.playSound(chicken.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
+                            chicken.remove();
+                        }
+                    }, 60);
                 }
                 else {
                     player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
-                    ev.getItem().getLocation().getWorld().spawnParticle(Particle.SPELL_INSTANT, ev.getItem().getLocation(), 5);
+                    world.spawnParticle(Particle.SPELL_INSTANT, eggLocation, 5);
                     ev.getItem().remove();
                     String regionName = nbtItem.getString("EggHuntRegion");
                     plugin.sendToWebServer(player, eggType, regionName);
