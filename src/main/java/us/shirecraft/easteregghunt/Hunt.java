@@ -4,6 +4,7 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -46,7 +47,10 @@ public class Hunt {
 
         if(null != randomPoint) {
             Location dropLocation = BukkitAdapter.adapt(world, randomPoint);
-            if(dropLocation.getChunk().isLoaded()) {
+            int chunkX = dropLocation.getBlockX() >> 4;
+            int chunkZ = dropLocation.getBlockZ() >> 4;
+
+            if(world.isChunkLoaded(chunkX, chunkZ)) {
                 ItemStack eggItem = treasure.getItem();
                 new BukkitRunnable() {
                     @Override

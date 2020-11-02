@@ -259,6 +259,6 @@ public class EasterEggHunt extends JavaPlugin {
     private HashMap<Class<?>, Float> _balancedData;
     private final int  TICKS_PER_SECOND = 20; // in an ideal situation
     private final long TASK_DELAY_TICKS = (long) (TICKS_PER_SECOND * 3);
-    private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 9);
+    private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 12);
     private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "thanksgiving", "christmas"};
 }
