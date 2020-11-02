@@ -1,6 +1,8 @@
-package us.shirecraft.easteregghunt;
+package us.shirecraft.easteregghunt.easter;
 
-public class SunflowerEgg extends Egg {
+import us.shirecraft.easteregghunt.TreasureItem;
+
+public class SunflowerEgg extends TreasureItem {
     public SunflowerEgg() {
         super("Sunflower",20, 15);
         setTexture(SUNFLOWER_EGG_TEXTURE);

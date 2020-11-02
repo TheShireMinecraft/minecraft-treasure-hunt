@@ -39,14 +39,15 @@ public class Hunt {
     public void doTick() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if(!enabled) return;
         randomPointAttempts = 0;
-        Egg egg = (Egg) chooseEgg().getDeclaredConstructor().newInstance();
-        egg.setRegionName(region.getId());
+        TreasureItem treasure = (TreasureItem) chooseEgg().getDeclaredConstructor().newInstance();
+        treasure.setRegionName(region.getId());
+        treasure.setHuntType(huntType);
         BlockVector3 randomPoint = randomPoint(region);
 
         if(null != randomPoint) {
-            Location dropLocation = BukkitAdapter.adapt(world,randomPoint);
+            Location dropLocation = BukkitAdapter.adapt(world, randomPoint);
             if(dropLocation.getChunk().isLoaded()) {
-                ItemStack eggItem = egg.getItem();
+                ItemStack eggItem = treasure.getItem();
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -102,6 +103,6 @@ public class Hunt {
     private EasterEggHunt plugin;
     private Random random;
     private int randomPointAttempts = 0;
-    private final int MAX_RANDOM_POINT_ATTEMPTS = 20;
+    private final int MAX_RANDOM_POINT_ATTEMPTS = 25;
     private String huntType;
 }

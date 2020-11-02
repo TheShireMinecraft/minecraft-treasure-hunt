@@ -18,7 +18,6 @@
 #     world_name:
 #       region_name:
 #         enabled: true
-#         type: 'halloween|christmas|easter'
 #         friendly_name: 'Region Name'
 #         delay: 8
 

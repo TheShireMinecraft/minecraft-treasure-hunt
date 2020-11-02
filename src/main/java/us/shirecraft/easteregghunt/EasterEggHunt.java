@@ -18,6 +18,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import us.shirecraft.easteregghunt.easter.*;
+import us.shirecraft.easteregghunt.halloween.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -27,15 +29,15 @@ public class EasterEggHunt extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        config = getConfig();
+        _config = getConfig();
 
         // Create empty lists
-        hunts = new ArrayList<>();
-        tasks = new ArrayList<>();
+        _hunts = new ArrayList<>();
+        _tasks = new ArrayList<>();
 
         // Egg hunt enabled?
-        if(!config.getBoolean("eggHuntEnabled")) {
-            getLogger().info("Egg hunts globally disabled in config.yml. Plugin will disable itself.");
+        if(!_config.getBoolean("eggHuntEnabled")) {
+            getLogger().info("Treasure hunts globally disabled in config.yml. Plugin will disable itself.");
             getServer().getPluginManager().disablePlugin(this);
         } else {
             // Initialise egg hunts
@@ -52,20 +54,20 @@ public class EasterEggHunt extends JavaPlugin {
 
     private void initialiseHunts() {
         // Get WG instance
-        worldGuard = WorldGuard.getInstance();
+        _worldGuard = WorldGuard.getInstance();
 
         // Get region container
-        regionContainer = getWg().getPlatform().getRegionContainer();
+        _regionContainer = getWg().getPlatform().getRegionContainer();
 
         // Get region(s) of egg hunt(s)
-        ConfigurationSection hunts = config.getConfigurationSection("hunts");
+        ConfigurationSection hunts = _config.getConfigurationSection("hunts");
         // Get names of worlds in config file
         Set<String> worlds = hunts.getKeys(false);
 
         if(!worlds.isEmpty()) {
             for (String worldName : worlds) {
                 // For each world, get the region(s) under it
-                LinkedHashSet<String> regions = (LinkedHashSet) config.getConfigurationSection("hunts." + worldName).getKeys(false);
+                LinkedHashSet<String> regions = (LinkedHashSet) _config.getConfigurationSection("hunts." + worldName).getKeys(false);
 
                 // Find object for this world
                 World world = getServer().getWorld(worldName);
@@ -79,19 +81,14 @@ public class EasterEggHunt extends JavaPlugin {
                         LinkedHashSet<String> regions_tmp = (LinkedHashSet) regions.clone();
                         for (String regionName : regions_tmp) {
                             // Check if region is enabled in config file
-                            boolean regionEnabled = config.getBoolean("hunts." + worldName + "." + regionName + ".enabled");
+                            boolean regionEnabled = _config.getBoolean("hunts." + worldName + "." + regionName + ".enabled");
 
                             // If enabled and region is defined in WorldGuard, then create hunt object and store hunt reference in ArrayList
                             if (regionEnabled && regionManager.hasRegion(regionName)) {
                                 // Check type of hunt
-                                String huntType = config.getString("hunts." + worldName + "." + regionName + ".type");
-                                if(null == huntType || huntType.equals("")) {
-                                    String defaultHuntType = config.getString("defaultHuntType");
-                                    huntType = defaultHuntType;
-                                }
-                                if(!Arrays.stream(VALID_HUNT_TYPES).anyMatch(huntType::equals)) {
-                                    huntType = VALID_HUNT_TYPES[0];
-                                }
+                                String huntType = ""; //_config.getString("hunts." + worldName + "." + regionName + ".type");
+                                huntType = validateHuntType(huntType);
+
                                 ProtectedRegion region = regionManager.getRegion(regionName);
                                 Hunt hunt = new Hunt(this, world, regionManager, region, huntType);
                                 getHunts().add(hunt);
@@ -105,7 +102,7 @@ public class EasterEggHunt extends JavaPlugin {
             registerEggs();
             startEggHunts();
         } else {
-            getLogger().info("No egg hunts are enabled in the plugin's config.yml file, or it contains spelling mistakes.");
+            getLogger().info("No treasure hunts are enabled in the plugin's config.yml file, or it contains spelling mistakes.");
         }
     }
 
@@ -113,69 +110,107 @@ public class EasterEggHunt extends JavaPlugin {
      * This is done badly
      */
     private void registerEggs() {
-        eggs = new HashMap<>();
-        eggs.put(PolkaDotEgg.class, 50);
-        eggs.put(RainbowEgg.class, 20);
-        eggs.put(SunflowerEgg.class, 15);
-        eggs.put(VioletEgg.class, 30);
-        eggs.put(RegularEgg.class, 70);
-        eggs.put(DragonEgg.class, 5);
-        eggs.put(BadEgg.class, 12);
+        getLogger().info("The default hunt type is " + getDefaultHuntType());
 
-        float sum = (float) eggs.values().stream().mapToDouble(i->i).sum();
-        data         = new HashMap<>();
-        balancedData = new HashMap<>();
+        _treasure     = new HashMap<>();
+        _balancedData = new HashMap<>();
+        _data         = new HashMap<>();
 
-        data.put(PolkaDotEgg.class,  50f/sum);
-        data.put(RainbowEgg.class,   20f/sum);
-        data.put(SunflowerEgg.class, 15f/sum);
-        data.put(BadEgg.class,       12f/sum);
-        data.put(VioletEgg.class,    30f/sum);
-        data.put(RegularEgg.class,   70f/sum);
-        data.put(DragonEgg.class,     5f/sum);
+        if(getDefaultHuntType().equals("easter")) {
+            _treasure.put(PolkaDotEgg.class, 50);
+            _treasure.put(RainbowEgg.class, 20);
+            _treasure.put(SunflowerEgg.class, 15);
+            _treasure.put(VioletEgg.class, 30);
+            _treasure.put(RegularEgg.class, 70);
+            _treasure.put(DragonEgg.class, 5);
+            _treasure.put(BadEgg.class, 12);
+        } else if(getDefaultHuntType().equals("halloween")) {
+            _treasure.put(BloodSpider.class, 20);
+            _treasure.put(CarvedPumpkin.class, 30);
+            _treasure.put(Cupcake.class, 30);
+            _treasure.put(CursedMummy.class, 15);
+            _treasure.put(Gumballs.class, 30);
+            _treasure.put(SpookyPenguin.class, 2);
+            _treasure.put(TrickTreatBasket.class, 60);
+        }
+
+        float sum = (float) _treasure.values().stream().mapToDouble(i->i).sum();
+
+        if(getDefaultHuntType().equals("easter")) {
+            _data.put(PolkaDotEgg.class, 50f / sum);
+            _data.put(RainbowEgg.class, 20f / sum);
+            _data.put(SunflowerEgg.class, 15f / sum);
+            _data.put(BadEgg.class, 12f / sum);
+            _data.put(VioletEgg.class, 30f / sum);
+            _data.put(RegularEgg.class, 70f / sum);
+            _data.put(DragonEgg.class, 5f / sum);
+        } else if(getDefaultHuntType().equals("halloween")) {
+            _data.put(BloodSpider.class, 20f / sum);
+            _data.put(CarvedPumpkin.class, 30f / sum);
+            _data.put(Cupcake.class, 30f / sum);
+            _data.put(CursedMummy.class, 15f / sum);
+            _data.put(Gumballs.class, 30f / sum);
+            _data.put(SpookyPenguin.class, 2f / sum);
+            _data.put(TrickTreatBasket.class, 60f / sum);
+        }
 
         float balancedSum = 0f;
-        for(Class eggClass : eggs.keySet()) {
-            balancedSum += data.get(eggClass);
-            balancedData.put(eggClass, balancedSum);
+        for(Class eggClass : _treasure.keySet()) {
+            balancedSum += _data.get(eggClass);
+            _balancedData.put(eggClass, balancedSum);
         }
     }
 
     private void startEggHunts() {
         for (Hunt hunt : getHunts()) {
             Runnable huntTask = new HuntTask(this, hunt);
-            tasks.add(this.getServer().getScheduler()
+            _tasks.add(this.getServer().getScheduler()
                     .runTaskTimerAsynchronously(this, huntTask, TASK_DELAY_TICKS, TASK_INTERVAL_TICKS));
             getLogger().info("Hunt started: " + hunt);
         }
     }
 
     public WorldGuard getWg() {
-        return this.worldGuard;
+        return this._worldGuard;
     }
 
     public RegionContainer getRegionContainer() {
-        return this.regionContainer;
+        return this._regionContainer;
     }
 
     public ArrayList<Hunt> getHunts() {
-        return this.hunts;
+        return this._hunts;
     }
 
-    public HashMap<Class<?>, Integer> getEggs() {
-        return eggs;
+    public HashMap<Class<?>, Integer> getTreasure() {
+        return _treasure;
     }
 
     public HashMap<Class<?>, Float> getBalancedData() {
-        return balancedData;
+        return _balancedData;
     }
 
     private void stopHunts() {
-        if(!tasks.isEmpty()) {
-            for(BukkitTask task : tasks) {
+        if(!_tasks.isEmpty()) {
+            for(BukkitTask task : _tasks) {
                 task.cancel();
             }
         }
+    }
+
+    public String getDefaultHuntType() {
+        String defaultHuntType = _config.getString("defaultHuntType");
+        return defaultHuntType;
+    }
+
+    public String validateHuntType(String huntType) {
+        if(null == huntType || huntType.equals("")) {
+            huntType = getDefaultHuntType();
+        }
+        if(!Arrays.stream(VALID_HUNT_TYPES).anyMatch(huntType::equals)) {
+            huntType = VALID_HUNT_TYPES[0];
+        }
+        return huntType;
     }
 
     public boolean sendToWebServer(Player player, final String eggType, final String regionName) {
@@ -193,19 +228,20 @@ public class EasterEggHunt extends JavaPlugin {
                             + "\"region\":\"" + regionName + "\""
                             + "}";
 
-                    StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
+                    String endpoint = getConfig().getString("apiEndpoint");
+                    String key = getConfig().getString("apiKey");
 
+                    StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
                     HttpClient httpClient = HttpClientBuilder.create().build();
-                    HttpPost request = new HttpPost(getConfig().getString("apiEndpoint") + getConfig().getString("apiKey"));
+                    HttpPost request = new HttpPost(endpoint + key);
                     request.setEntity(entity);
 
                     try {
                         httpClient.execute(request);
                     } catch (ClientProtocolException e) {
-                        getLogger().warning(" ! Encountered a ClientProtocolException when attempting to transmit data");
+                        getLogger().warning(" ! Encountered ClientProtocolException when attempting to transmit data");
                     } catch (IOException e) {
-                        getLogger().warning(" ! Encountered an IOException when attempting to transmit data");
-                        e.printStackTrace();
+                        getLogger().warning(" ! Encountered IOException when attempting to transmit data");
                     }
                 }
             });
@@ -213,16 +249,16 @@ public class EasterEggHunt extends JavaPlugin {
         return false;
     }
 
-    private FileConfiguration config;
-    private WorldGuard worldGuard;
-    private RegionContainer regionContainer;
-    private ArrayList<Hunt> hunts;
-    private ArrayList<BukkitTask> tasks;
-    private HashMap<Class<?>, Integer> eggs;
-    private HashMap<Class<?>, Float> data;
-    private HashMap<Class<?>, Float> balancedData;
+    private FileConfiguration _config;
+    private WorldGuard _worldGuard;
+    private RegionContainer _regionContainer;
+    private ArrayList<Hunt> _hunts;
+    private ArrayList<BukkitTask> _tasks;
+    private HashMap<Class<?>, Integer> _treasure;
+    private HashMap<Class<?>, Float> _data;
+    private HashMap<Class<?>, Float> _balancedData;
     private final int  TICKS_PER_SECOND = 20; // in an ideal situation
     private final long TASK_DELAY_TICKS = (long) (TICKS_PER_SECOND * 3);
     private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 9);
-    private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "christmas"};
+    private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "thanksgiving", "christmas"};
 }

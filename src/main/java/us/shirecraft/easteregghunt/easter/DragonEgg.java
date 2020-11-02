@@ -1,6 +1,8 @@
-package us.shirecraft.easteregghunt;
+package us.shirecraft.easteregghunt.easter;
 
-public class DragonEgg extends Egg {
+import us.shirecraft.easteregghunt.TreasureItem;
+
+public class DragonEgg extends TreasureItem {
     public DragonEgg() {
         super("Dragon",100, 5);
         setTexture(DRAGON_EGG_TEXTURE);

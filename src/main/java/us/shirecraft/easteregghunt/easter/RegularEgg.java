@@ -1,6 +1,8 @@
-package us.shirecraft.easteregghunt;
+package us.shirecraft.easteregghunt.easter;
 
-public class RegularEgg extends Egg {
+import us.shirecraft.easteregghunt.TreasureItem;
+
+public class RegularEgg extends TreasureItem {
     public RegularEgg() {
         super("Regular",1, 70);
         setTexture(REGULAR_EGG_TEXTURE);

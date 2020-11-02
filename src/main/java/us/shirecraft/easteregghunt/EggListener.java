@@ -25,11 +25,14 @@ public class EggListener implements Listener {
             if(ev.getEntity() instanceof Player) {
                 Player player = (Player) ev.getEntity();
                 NBTItem nbtItem = new NBTItem(is);
-                String eggType = nbtItem.getString("EasterEgg");
-                player.sendMessage("§6 ** You found a " + eggType + " Egg");
+                String huntType = plugin.validateHuntType(nbtItem.getString("EggHuntType"));
+                String treasureType = nbtItem.getString("TreasureType");
+
+                player.sendMessage("§6 ** You found a " + treasureType + (huntType.equals("easter")?" Egg":""));
                 Location eggLocation = ev.getItem().getLocation();
                 World world = eggLocation.getWorld();
-                if(getRandom(1,100) < 6) {
+
+                if(getRandom(1,100) < 6 && huntType.equals("easter")) {
                     player.sendMessage("§a ** The egg hatched before you could collect it!");
                     world.spawnParticle(Particle.EXPLOSION_LARGE, eggLocation, 2);
                     ev.getItem().remove();
@@ -40,16 +43,13 @@ public class EggListener implements Listener {
                     world.spawnParticle(Particle.HEART, chicken.getLocation(), 2);
                     world.playSound(chicken.getLocation(), Sound.ENTITY_CHICKEN_AMBIENT, 1, 1);
 
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            if(null == chicken || null == world || null == player) {
-                                return;
-                            }
-                            world.spawnParticle(Particle.FLASH, chicken.getLocation(), 2);
-                            world.playSound(chicken.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
-                            chicken.remove();
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                        if(null == chicken || null == world || null == player) {
+                            return;
                         }
+                        world.spawnParticle(Particle.FLASH, chicken.getLocation(), 2);
+                        world.playSound(chicken.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
+                        chicken.remove();
                     }, 60);
                 }
                 else {
@@ -57,7 +57,7 @@ public class EggListener implements Listener {
                     world.spawnParticle(Particle.SPELL_INSTANT, eggLocation, 5);
                     ev.getItem().remove();
                     String regionName = nbtItem.getString("EggHuntRegion");
-                    plugin.sendToWebServer(player, eggType, regionName);
+                    plugin.sendToWebServer(player, treasureType, regionName);
                 }
             }
             ev.setCancelled(true);
@@ -67,7 +67,7 @@ public class EggListener implements Listener {
     public boolean isEasterEgg(ItemStack is) {
         if(is.getType() == Material.PLAYER_HEAD) {
             NBTItem nbtItem = new NBTItem(is);
-            return nbtItem.getKeys().contains("EasterEgg");
+            return nbtItem.getKeys().contains("TreasureType");
         }
         return false;
     }

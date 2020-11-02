@@ -1,5 +1,5 @@
 # spigot-easteregghunt
-Minecraft server Easter egg hunt using WorldGuard regions.
+Minecraft server treasure hunt using WorldGuard regions. Supports Easter, Halloween and Christmas.
 
 ## Configuration options
 ```

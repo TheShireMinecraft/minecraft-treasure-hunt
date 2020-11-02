@@ -1,6 +1,8 @@
-package us.shirecraft.easteregghunt;
+package us.shirecraft.easteregghunt.easter;
 
-public class RainbowEgg extends Egg {
+import us.shirecraft.easteregghunt.TreasureItem;
+
+public class RainbowEgg extends TreasureItem {
     public RainbowEgg() {
         super("Rainbow",30, 20);
         setTexture(RAINBOW_EGG_TEXTURE);

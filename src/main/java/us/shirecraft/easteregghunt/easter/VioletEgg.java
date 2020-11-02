@@ -1,6 +1,8 @@
-package us.shirecraft.easteregghunt;
+package us.shirecraft.easteregghunt.easter;
 
-public class VioletEgg extends Egg {
+import us.shirecraft.easteregghunt.TreasureItem;
+
+public class VioletEgg extends TreasureItem {
     public VioletEgg() {
         super("Violet",10, 30);
         setTexture(VOILET_EGG_TEXTURE);

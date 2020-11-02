@@ -1,6 +1,8 @@
-package us.shirecraft.easteregghunt;
+package us.shirecraft.easteregghunt.easter;
 
-public class PolkaDotEgg extends Egg {
+import us.shirecraft.easteregghunt.TreasureItem;
+
+public class PolkaDotEgg extends TreasureItem {
     public PolkaDotEgg() {
         super("Polka Dot",30, 50);
         setTexture(POLKADOT_EGG_TEXTURE);
