@@ -4,14 +4,16 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Random;
 
 public class Hunt {
@@ -55,7 +57,10 @@ public class Hunt {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        world.dropItemNaturally(dropLocation, eggItem);
+                        Collection<Entity> entities = world.getNearbyEntities(dropLocation, 32, 100,32, (e) -> e.getType() == EntityType.DROPPED_ITEM);
+                        if(entities.size() <= 6) {
+                            world.dropItemNaturally(dropLocation, eggItem);
+                        }
                     }
                 }.runTask(plugin);
             }

@@ -18,6 +18,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import us.shirecraft.easteregghunt.christmas.*;
 import us.shirecraft.easteregghunt.easter.*;
 import us.shirecraft.easteregghunt.halloween.*;
 
@@ -132,6 +133,14 @@ public class EasterEggHunt extends JavaPlugin {
             _treasure.put(Gumballs.class, 30);
             _treasure.put(SpookyPenguin.class, 2);
             _treasure.put(TrickTreatBasket.class, 60);
+        } else if(getDefaultHuntType().equals("christmas")) {
+            _treasure.put(FestivePenguin.class, 2);
+            _treasure.put(Gift.class, 90);
+            _treasure.put(GingerbreadHouse.class, 20);
+            _treasure.put(GingerbreadMan.class, 4);
+            _treasure.put(PlateOfCookies.class, 40);
+            _treasure.put(ReindeerPlushy.class, 12);
+            _treasure.put(Snowman.class, 40);
         }
 
         float sum = (float) _treasure.values().stream().mapToDouble(i->i).sum();
@@ -152,6 +161,14 @@ public class EasterEggHunt extends JavaPlugin {
             _data.put(Gumballs.class, 30f / sum);
             _data.put(SpookyPenguin.class, 2f / sum);
             _data.put(TrickTreatBasket.class, 60f / sum);
+        } else if(getDefaultHuntType().equals("christmas")) {
+            _data.put(FestivePenguin.class, 2f / sum);
+            _data.put(Gift.class, 90f / sum);
+            _data.put(GingerbreadHouse.class, 20f / sum);
+            _data.put(GingerbreadMan.class, 4f / sum);
+            _data.put(PlateOfCookies.class, 40f / sum);
+            _data.put(ReindeerPlushy.class, 12f / sum);
+            _data.put(Snowman.class, 40f / sum);
         }
 
         float balancedSum = 0f;
@@ -259,6 +276,6 @@ public class EasterEggHunt extends JavaPlugin {
     private HashMap<Class<?>, Float> _balancedData;
     private final int  TICKS_PER_SECOND = 20; // in an ideal situation
     private final long TASK_DELAY_TICKS = (long) (TICKS_PER_SECOND * 3);
-    private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 12);
+    private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 15);
     private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "thanksgiving", "christmas"};
 }

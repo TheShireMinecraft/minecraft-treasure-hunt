@@ -1,7 +1,7 @@
 main: us.shirecraft.easteregghunt.EasterEggHunt
 name: EasterEggHunt
-version: 0.2.0-SNAPSHOT
-description: "Easter egg hunt using WorldGuard regions"
+version: 0.3.0-SNAPSHOT
+description: "Treasure hunt using WorldGuard regions"
 api-version: 1.16
 load: POSTWORLD
 author: Blitheness
@@ -11,8 +11,8 @@ prefix: EggHunt
 commands:
   egghunt:
     aliases: egg
-    description: Manage the Easter egg hunt plugin
+    description: Manage the treasure hunt plugin
 permissions:
   egghunt.manage:
-    description: Ability to start or end an egg hunt
+    description: Ability to start or end a hunt
     default: op
