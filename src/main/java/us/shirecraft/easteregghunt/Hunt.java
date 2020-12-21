@@ -57,8 +57,8 @@ public class Hunt {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        Collection<Entity> entities = world.getNearbyEntities(dropLocation, 32, 100,32, (e) -> e.getType() == EntityType.DROPPED_ITEM);
-                        if(entities.size() <= 6) {
+                        Collection<Entity> entities = world.getNearbyEntities(dropLocation, 16, 100,16, (e) -> e.getType() == EntityType.DROPPED_ITEM);
+                        if(entities.size() <= 8) {
                             world.dropItemNaturally(dropLocation, eggItem);
                         }
                     }
