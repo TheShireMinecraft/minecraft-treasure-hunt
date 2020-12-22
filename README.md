@@ -24,6 +24,14 @@ false if egg hunts are globally disabled and the plugin should do nothing.
 URL of API endpoint for keeping track of player scores, without a trailing slash.
 _e.g. apiEndpoint: 'https://example.com/egg-hunt-api'_
 
+The data sent in the JSON payload has the following keys:
+- uuid (player UUID)
+- name (player name)
+- egg (name of the item found)
+- region (ID of the WorldGuard region the item was found in)
+
+The 'API Key' is sent as a query parameter in the GET request to the endpoint, with a name of 'k'.
+
 ### apiKey
 Token for authenticating your server against the score tracking API
 
