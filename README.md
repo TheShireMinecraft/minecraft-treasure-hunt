@@ -1,5 +1,6 @@
 # spigot-easteregghunt
-Minecraft server treasure hunt using WorldGuard regions. Supports Easter, Halloween and Christmas.
+Treasure hunts for WorldGuard regions. Supports poly and cuboid regions only. Supported hunt types are 'easter', 'halloween' and 'christmas'. Plugin can throw a JSON payload at a given endpoint whenever an item is found.
+
 
 ## Configuration options
 ```
