@@ -1,6 +1,9 @@
 # spigot-easteregghunt
 Treasure hunts for WorldGuard regions. Supports poly and cuboid regions only. Supported hunt types are 'easter', 'halloween' and 'christmas'. Plugin can throw a JSON payload at a given endpoint whenever an item is found.
 
+## Requirements
+- Spigot or Paper v1.16.4
+- Item NBT API v2.6
 
 ## Configuration options
 ```
