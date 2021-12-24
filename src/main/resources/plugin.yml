@@ -1,8 +1,8 @@
 main: us.shirecraft.easteregghunt.EasterEggHunt
 name: EasterEggHunt
-version: '0.4.4-SNAPSHOT'
+version: '0.4.5-SNAPSHOT'
 description: "Treasure hunt using WorldGuard regions"
-api-version: 1.18
+api-version: 1.17
 load: POSTWORLD
 author: Blitheness
 website: shirecraft.us
