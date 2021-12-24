@@ -43,6 +43,7 @@ public class EasterEggHunt extends JavaPlugin {
         } else {
             // Initialise egg hunts
             new EggListener(this);
+            new SnowTrailListener(this);
             initialiseHunts();
         }
     }
@@ -62,8 +63,15 @@ public class EasterEggHunt extends JavaPlugin {
 
         // Get region(s) of egg hunt(s)
         ConfigurationSection hunts = _config.getConfigurationSection("hunts");
+
         // Get names of worlds in config file
-        Set<String> worlds = hunts.getKeys(false);
+        Set<String> worlds;
+        try {
+            worlds = hunts.getKeys(false);
+        }
+        catch(NullPointerException ex) {
+            worlds = new HashSet<String>();
+        }
 
         if(!worlds.isEmpty()) {
             for (String worldName : worlds) {

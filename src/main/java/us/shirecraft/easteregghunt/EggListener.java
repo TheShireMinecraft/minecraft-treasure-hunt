@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Random;
 
@@ -44,7 +45,7 @@ public class EggListener implements Listener {
                     world.spawnParticle(Particle.HEART, chicken.getLocation(), 2);
                     world.playSound(chicken.getLocation(), Sound.ENTITY_CHICKEN_AMBIENT, 1, 1);
 
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
                         //noinspection ConstantConditions
                         if(null == chicken || null == world || null == player) {
                             return;
@@ -53,6 +54,40 @@ public class EggListener implements Listener {
                         world.playSound(chicken.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
                         chicken.remove();
                     }, 60);
+                }
+                if(getRandom(1,100) <= 10 && huntType.equals("christmas") && treasureType.equals("Snowman")) {
+                    player.sendMessage("§a ** The snowman sprung to life before you could collect it!");
+
+                    world.spawnParticle(Particle.SPELL_INSTANT, eggLocation, 2);
+                    ev.getItem().remove();
+
+                    Location spawnSnowmanLoc = eggLocation.clone();
+                    spawnSnowmanLoc.add(0, .05d, 0);
+
+                    Snowman snowman = (Snowman) world.spawnEntity(spawnSnowmanLoc, EntityType.SNOWMAN);
+                    snowman.setDerp(true);
+                    snowman.setAI(false);
+                    snowman.setTicksLived(1);
+                    snowman.setCanPickupItems(false);
+                    snowman.setCollidable(false);
+                    snowman.setInvulnerable(true);
+                    snowman.setAware(false);
+                    snowman.setFreezeTicks(snowman.getMaxFreezeTicks());
+                    snowman.setMetadata("egghunt.random-snowman", new FixedMetadataValue(plugin, true));
+
+                    world.spawnParticle(Particle.SNOWFLAKE, snowman.getLocation(), 2);
+                    world.playSound(snowman.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 1);
+
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        //noinspection ConstantConditions
+                        if(null == snowman || null == world || null == player) {
+                            return;
+                        }
+                        world.spawnParticle(Particle.FLASH, snowman.getLocation(), 2);
+                        world.playSound(snowman.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
+                        snowman.damage(8192d);
+                        snowman.remove();
+                    }, 40);
                 }
                 else {
                     player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
