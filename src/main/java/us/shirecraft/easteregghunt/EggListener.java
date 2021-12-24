@@ -22,8 +22,7 @@ public class EggListener implements Listener {
     public void onPlayerPickUpEgg(EntityPickupItemEvent ev) {
         ItemStack is = ev.getItem().getItemStack();
         if(isEasterEgg(is)) {
-            if(ev.getEntity() instanceof Player) {
-                Player player = (Player) ev.getEntity();
+            if(ev.getEntity() instanceof Player player) {
                 NBTItem nbtItem = new NBTItem(is);
                 String huntType = plugin.validateHuntType(nbtItem.getString("EggHuntType"));
                 String treasureType = nbtItem.getString("TreasureType");
@@ -31,9 +30,11 @@ public class EggListener implements Listener {
                 player.sendMessage("§6 ** You found a " + treasureType + (huntType.equals("easter")?" Egg":""));
                 Location eggLocation = ev.getItem().getLocation();
                 World world = eggLocation.getWorld();
+                assert world != null;
 
                 if(getRandom(1,100) < 6 && huntType.equals("easter")) {
                     player.sendMessage("§a ** The egg hatched before you could collect it!");
+
                     world.spawnParticle(Particle.EXPLOSION_LARGE, eggLocation, 2);
                     ev.getItem().remove();
 
@@ -44,6 +45,7 @@ public class EggListener implements Listener {
                     world.playSound(chicken.getLocation(), Sound.ENTITY_CHICKEN_AMBIENT, 1, 1);
 
                     Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                        //noinspection ConstantConditions
                         if(null == chicken || null == world || null == player) {
                             return;
                         }
@@ -77,5 +79,5 @@ public class EggListener implements Listener {
     }
 
     private final EasterEggHunt plugin;
-    private Random random;
+    private final Random random;
 }

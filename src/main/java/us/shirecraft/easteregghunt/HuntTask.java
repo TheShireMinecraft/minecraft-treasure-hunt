@@ -17,13 +17,10 @@ public class HuntTask extends BukkitRunnable {
     public void run() {
         try {
             hunt.doTick();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (NoSuchMethodException
+                | IllegalAccessException
+                | InvocationTargetException
+                | InstantiationException e) {
             e.printStackTrace();
         }
     }

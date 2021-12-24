@@ -199,10 +199,6 @@ public class EasterEggHunt extends JavaPlugin {
         return this._hunts;
     }
 
-    public HashMap<Class<? extends TreasureItem>, Integer> getTreasure() {
-        return _treasure;
-    }
-
     public HashMap<Class<? extends TreasureItem>, Float> getBalancedData() {
         return _balancedData;
     }
@@ -216,8 +212,7 @@ public class EasterEggHunt extends JavaPlugin {
     }
 
     public String getDefaultHuntType() {
-        String defaultHuntType = _config.getString("defaultHuntType");
-        return defaultHuntType;
+        return _config.getString("defaultHuntType");
     }
 
     public String validateHuntType(String huntType) {
@@ -234,32 +229,29 @@ public class EasterEggHunt extends JavaPlugin {
         if(!getConfig().getString("apiKey").equals("")) {
             final String playerUuid = player.getUniqueId().toString();
             final String playerName = player.getName();
-            Bukkit.getScheduler().runTaskAsynchronously(this, new Runnable() {
-                @Override
-                public void run() {
-                    String payload
-                            = "data={"
-                            + "\"uuid\":\"" + playerUuid + "\","
-                            + "\"name\":\""+ playerName +"\","
-                            + "\"egg\":\"" + eggType + "\","
-                            + "\"region\":\"" + regionName + "\""
-                            + "}";
+            Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+                String payload
+                        = "data={"
+                        + "\"uuid\":\"" + playerUuid + "\","
+                        + "\"name\":\""+ playerName +"\","
+                        + "\"egg\":\"" + eggType + "\","
+                        + "\"region\":\"" + regionName + "\""
+                        + "}";
 
-                    String endpoint = getConfig().getString("apiEndpoint");
-                    String key = getConfig().getString("apiKey");
+                String endpoint = getConfig().getString("apiEndpoint");
+                String key = getConfig().getString("apiKey");
 
-                    StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
-                    HttpClient httpClient = HttpClientBuilder.create().build();
-                    HttpPost request = new HttpPost(endpoint + key);
-                    request.setEntity(entity);
+                StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
+                HttpClient httpClient = HttpClientBuilder.create().build();
+                HttpPost request = new HttpPost(endpoint + key);
+                request.setEntity(entity);
 
-                    try {
-                        httpClient.execute(request);
-                    } catch (ClientProtocolException e) {
-                        getLogger().warning(" ! Encountered ClientProtocolException when attempting to transmit data");
-                    } catch (IOException e) {
-                        getLogger().warning(" ! Encountered IOException when attempting to transmit data");
-                    }
+                try {
+                    httpClient.execute(request);
+                } catch (ClientProtocolException e) {
+                    getLogger().warning(" ! Encountered ClientProtocolException when attempting to transmit data");
+                } catch (IOException e) {
+                    getLogger().warning(" ! Encountered IOException when attempting to transmit data");
                 }
             });
         }

@@ -1,19 +1,15 @@
 package us.shirecraft.easteregghunt;
 
 import com.mojang.authlib.GameProfile;
-
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
-
 import de.tr7zw.nbtapi.NBTItem;
-
 import io.github.coachluck.backpacksplus.utils.multiversion.ReflectionUtil;
-
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class TreasureItem implements Comparable {
@@ -67,10 +63,11 @@ public class TreasureItem implements Comparable {
 
         // Get meta class for reflection
         ItemMeta headMeta = _item.getItemMeta();
+        assert headMeta != null;
 
         // Set name and lore
         headMeta.setDisplayName(_name);
-        headMeta.setLore(Arrays.asList("I've found some Treasure!"));
+        headMeta.setLore(List.of("I've found some Treasure!"));
 
         // Set profile
         Class<?> headMetaClass = headMeta.getClass();

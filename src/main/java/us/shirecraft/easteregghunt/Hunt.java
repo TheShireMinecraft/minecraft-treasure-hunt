@@ -27,10 +27,6 @@ public class Hunt {
         this.huntType = huntType;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
     @Override
     public String toString() {
         return region.getId() + " (" + world.getName() + ")";
@@ -42,7 +38,7 @@ public class Hunt {
     public void doTick() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if(!enabled) return;
         randomPointAttempts = 0;
-        TreasureItem treasure = (TreasureItem) chooseEgg().getDeclaredConstructor().newInstance();
+        TreasureItem treasure = chooseEgg().getDeclaredConstructor().newInstance();
         treasure.setRegionName(region.getId());
         treasure.setHuntType(huntType);
         BlockVector3 randomPoint = randomPoint(region);
