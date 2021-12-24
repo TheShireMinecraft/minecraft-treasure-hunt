@@ -68,7 +68,7 @@ public class EasterEggHunt extends JavaPlugin {
         if(!worlds.isEmpty()) {
             for (String worldName : worlds) {
                 // For each world, get the region(s) under it
-                LinkedHashSet<String> regions = (LinkedHashSet) _config.getConfigurationSection("hunts." + worldName).getKeys(false);
+                LinkedHashSet<String> regions = (LinkedHashSet<String>) _config.getConfigurationSection("hunts." + worldName).getKeys(false);
 
                 // Find object for this world
                 World world = getServer().getWorld(worldName);
@@ -172,7 +172,7 @@ public class EasterEggHunt extends JavaPlugin {
         }
 
         float balancedSum = 0f;
-        for(Class eggClass : _treasure.keySet()) {
+        for(Class<? extends TreasureItem> eggClass : _treasure.keySet()) {
             balancedSum += _data.get(eggClass);
             _balancedData.put(eggClass, balancedSum);
         }
@@ -199,11 +199,11 @@ public class EasterEggHunt extends JavaPlugin {
         return this._hunts;
     }
 
-    public HashMap<Class<?>, Integer> getTreasure() {
+    public HashMap<Class<? extends TreasureItem>, Integer> getTreasure() {
         return _treasure;
     }
 
-    public HashMap<Class<?>, Float> getBalancedData() {
+    public HashMap<Class<? extends TreasureItem>, Float> getBalancedData() {
         return _balancedData;
     }
 
@@ -271,11 +271,11 @@ public class EasterEggHunt extends JavaPlugin {
     private RegionContainer _regionContainer;
     private ArrayList<Hunt> _hunts;
     private ArrayList<BukkitTask> _tasks;
-    private HashMap<Class<?>, Integer> _treasure;
-    private HashMap<Class<?>, Float> _data;
-    private HashMap<Class<?>, Float> _balancedData;
+    private HashMap<Class<? extends TreasureItem>, Integer> _treasure;
+    private HashMap<Class<? extends TreasureItem>, Float> _data;
+    private HashMap<Class<? extends TreasureItem>, Float> _balancedData;
     private final int  TICKS_PER_SECOND = 20; // in an ideal situation
-    private final long TASK_DELAY_TICKS = (long) (TICKS_PER_SECOND * 3);
-    private final long TASK_INTERVAL_TICKS = (long) (TICKS_PER_SECOND * 15);
+    private final long TASK_DELAY_TICKS = TICKS_PER_SECOND * 3;
+    private final long TASK_INTERVAL_TICKS = TICKS_PER_SECOND * 15;
     private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "thanksgiving", "christmas"};
 }

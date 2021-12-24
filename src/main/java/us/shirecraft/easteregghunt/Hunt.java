@@ -57,7 +57,7 @@ public class Hunt {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        Collection<Entity> entities = world.getNearbyEntities(dropLocation, 16, 100,16, (e) -> e.getType() == EntityType.DROPPED_ITEM);
+                        Collection<Entity> entities = world.getNearbyEntities(dropLocation, 48, 100,48, (e) -> e.getType() == EntityType.DROPPED_ITEM);
                         if(entities.size() <= 8) {
                             world.dropItemNaturally(dropLocation, eggItem);
                         }
@@ -67,9 +67,9 @@ public class Hunt {
         }
     }
 
-    public Class chooseEgg() {
+    public Class<? extends TreasureItem> chooseEgg() {
         float rand = new Random().nextFloat();
-        for(Class eggClass : plugin.getBalancedData().keySet()) {
+        for(Class<? extends TreasureItem> eggClass : plugin.getBalancedData().keySet()) {
             if(rand <= plugin.getBalancedData().get(eggClass)) {
                 return eggClass;
             }
