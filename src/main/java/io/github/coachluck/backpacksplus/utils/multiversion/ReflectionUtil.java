@@ -38,17 +38,17 @@ public class ReflectionUtil {
     /*
      * Cache of NMS classes that we've searched for
      */
-    private static Map<String, Class<?>> loadedNMSClasses = new HashMap<>();
+    private static final Map<String, Class<?>> loadedNMSClasses = new HashMap<>();
 
     /*
      * Cache of OBS classes that we've searched for
      */
-    private static Map<String, Class<?>> loadedOBCClasses = new HashMap<>();
+    private static final Map<String, Class<?>> loadedOBCClasses = new HashMap<>();
 
     /*
      * Cache of methods that we've found in particular classes
      */
-    private static Map<Class<?>, Map<String, Method>> loadedMethods = new HashMap<>();
+    private static final Map<Class<?>, Map<String, Method>> loadedMethods = new HashMap<>();
 
 
     /**
