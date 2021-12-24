@@ -105,13 +105,13 @@ public class Hunt {
         return random.nextInt(max - min) + min;
     }
 
-    private World world;
-    private ProtectedRegion region;
-    private RegionManager regionManager;
-    private boolean enabled;
-    private EasterEggHunt plugin;
-    private Random random;
+    private final World world;
+    private final ProtectedRegion region;
+    private final RegionManager regionManager;
+    private final boolean enabled;
+    private final EasterEggHunt plugin;
+    private final Random random;
     private int randomPointAttempts = 0;
     private final int MAX_RANDOM_POINT_ATTEMPTS = 25;
-    private String huntType;
+    private final String huntType;
 }
