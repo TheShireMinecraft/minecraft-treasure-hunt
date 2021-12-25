@@ -5,11 +5,13 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
@@ -17,6 +19,7 @@ import org.bukkit.util.BoundingBox;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class Hunt {
     public Hunt(EasterEggHunt plugin, World world, RegionManager regionManager, ProtectedRegion region, String huntType) {
@@ -47,8 +50,6 @@ public class Hunt {
 
         if(null != randomPoint) {
             Location dropLocation = BukkitAdapter.adapt(world, randomPoint);
-            int chunkX = dropLocation.getBlockX() >> 4;
-            int chunkZ = dropLocation.getBlockZ() >> 4;
 
             // Only drop treasure if a player is nearby
             BoundingBox boundingBox = new BoundingBox(
@@ -59,10 +60,19 @@ public class Hunt {
                 256d,
                 dropLocation.getZ() + 350d
             );
-            boolean anyPlayerIsNearDropLocation = world
-                    .getNearbyEntities(boundingBox)
-                    .stream()
-                    .anyMatch(x -> x.getType() == EntityType.PLAYER);
+
+            boolean anyPlayerIsNearDropLocation;
+            try {
+                anyPlayerIsNearDropLocation = Bukkit.getServer().getScheduler().callSyncMethod(
+                    plugin,
+                    () -> world
+                        .getNearbyEntities(boundingBox)
+                        .stream()
+                        .anyMatch(x -> x instanceof Player)
+                ).get();
+            } catch (InterruptedException | ExecutionException e) {
+                anyPlayerIsNearDropLocation = true;
+            }
 
             if(anyPlayerIsNearDropLocation) {
                 ItemStack eggItem = treasure.getItem();
