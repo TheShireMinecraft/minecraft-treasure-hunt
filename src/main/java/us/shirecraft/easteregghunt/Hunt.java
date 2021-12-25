@@ -2,6 +2,7 @@ package us.shirecraft.easteregghunt;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Location;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.BoundingBox;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -48,7 +50,21 @@ public class Hunt {
             int chunkX = dropLocation.getBlockX() >> 4;
             int chunkZ = dropLocation.getBlockZ() >> 4;
 
-            if(world.isChunkLoaded(chunkX, chunkZ)) {
+            // Only drop treasure if a player is nearby
+            BoundingBox boundingBox = new BoundingBox(
+                dropLocation.getX() - 350d,
+                50d,
+                dropLocation.getZ() - 350d,
+                dropLocation.getX() + 350d,
+                256d,
+                dropLocation.getZ() + 350d
+            );
+            boolean anyPlayerIsNearDropLocation = world
+                    .getNearbyEntities(boundingBox)
+                    .stream()
+                    .anyMatch(x -> x.getType() == EntityType.PLAYER);
+
+            if(anyPlayerIsNearDropLocation) {
                 ItemStack eggItem = treasure.getItem();
                 new BukkitRunnable() {
                     @Override
