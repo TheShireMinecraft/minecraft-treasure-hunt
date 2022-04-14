@@ -5,8 +5,6 @@
       <configuration>
         <autoDetectTypes>
           <platformType>SPIGOT</platformType>
-          <platformType>MCP</platformType>
-          <platformType>BUKKIT</platformType>
         </autoDetectTypes>
       </configuration>
     </facet>
