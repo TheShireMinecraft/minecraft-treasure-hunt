@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import us.shirecraft.easteregghunt.halloween.BloodSpider;
 
 import java.util.Random;
 
@@ -54,6 +55,27 @@ public class EggListener implements Listener {
                         world.playSound(chicken.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
                         chicken.remove();
                     }, 60);
+                }
+                if(getRandom(1,100) < 10 && huntType.equals("halloween") && treasureType.equals("Blood Spider")) {
+                    player.sendMessage("§a ** It's... §a§lALIVE§a!");
+
+                    world.spawnParticle(Particle.EXPLOSION_LARGE, eggLocation, 2);
+                    ev.getItem().remove();
+
+                    CaveSpider spider = (CaveSpider) world.spawnEntity(eggLocation, EntityType.CAVE_SPIDER);
+                    spider.setTicksLived(1);
+                    world.spawnParticle(Particle.FLASH, spider.getLocation(), 2);
+                    world.playSound(spider.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1, 1);
+
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        //noinspection ConstantConditions
+                        if(null == spider || null == world || null == player) {
+                            return;
+                        }
+                        world.spawnParticle(Particle.FLASH, spider.getLocation(), 2);
+                        world.playSound(spider.getLocation(), Sound.ENTITY_SPIDER_HURT, 1, 1);
+                        spider.remove();
+                    }, 80);
                 }
                 if(getRandom(1,100) <= 10 && huntType.equals("christmas") && treasureType.equals("Snowman")) {
                     player.sendMessage("§a ** The snowman sprung to life before you could collect it!");
