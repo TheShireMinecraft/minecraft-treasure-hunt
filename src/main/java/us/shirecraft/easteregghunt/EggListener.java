@@ -56,7 +56,7 @@ public class EggListener implements Listener {
                         chicken.remove();
                     }, 60);
                 }
-                if(getRandom(1,100) < 10 && huntType.equals("halloween") && treasureType.equals("Blood Spider")) {
+                if(getRandom(1,100) < 7 && huntType.equals("halloween") && treasureType.equals("Blood Spider")) {
                     player.sendMessage("§a ** It's... §a§lALIVE§a!");
 
                     world.spawnParticle(Particle.EXPLOSION_LARGE, eggLocation, 2);
