@@ -1,5 +1,8 @@
 package us.shirecraft.easteregghunt;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -11,7 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import us.shirecraft.easteregghunt.halloween.BloodSpider;
 
+import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class EggListener implements Listener {
     public EggListener(EasterEggHunt plugin) {
@@ -28,11 +33,29 @@ public class EggListener implements Listener {
                 NBTItem nbtItem = new NBTItem(is);
                 String huntType = plugin.validateHuntType(nbtItem.getString("EggHuntType"));
                 String treasureType = nbtItem.getString("TreasureType");
+                String regionName = nbtItem.getString("EggHuntRegion");
 
-                player.sendMessage("§6 ** You found a " + treasureType + (huntType.equals("easter")?" Egg":""));
                 Location eggLocation = ev.getItem().getLocation();
                 World world = eggLocation.getWorld();
                 assert world != null;
+
+                var adaptedEggWorld = BukkitAdapter.adapt(world);
+                var adaptedEggLocation = BukkitAdapter.adapt(eggLocation).toVector().toBlockPoint();
+                var wgRegionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
+                var regionsEggWasFoundIn = Objects.requireNonNull(wgRegionContainer.get(adaptedEggWorld))
+                        .getApplicableRegions(adaptedEggLocation)
+                        .getRegions()
+                        .stream()
+                        .map(ProtectedRegion::getId)
+                        .toList();
+
+                if(!regionsEggWasFoundIn.contains(regionName))
+                {
+                    player.sendMessage("§4 ** Sorry, there was a problem with the treasure you found and it has not been counted.");
+                    return;
+                }
+
+                player.sendMessage("§6 ** You found a " + treasureType + (huntType.equals("easter")?" Egg":""));
 
                 if(getRandom(1,100) < 6 && huntType.equals("easter")) {
                     player.sendMessage("§a ** The egg hatched before you could collect it!");
@@ -115,7 +138,6 @@ public class EggListener implements Listener {
                     player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
                     world.spawnParticle(Particle.SPELL_INSTANT, eggLocation, 5);
                     ev.getItem().remove();
-                    String regionName = nbtItem.getString("EggHuntRegion");
                     plugin.sendToWebServer(player, treasureType, regionName);
                 }
             }

@@ -21,6 +21,10 @@ import org.bukkit.scheduler.BukkitTask;
 import us.shirecraft.easteregghunt.christmas.*;
 import us.shirecraft.easteregghunt.easter.*;
 import us.shirecraft.easteregghunt.halloween.*;
+import us.shirecraft.easteregghunt.thanksgiving.HotCocoa;
+import us.shirecraft.easteregghunt.thanksgiving.NutRoast;
+import us.shirecraft.easteregghunt.thanksgiving.RoastDinner;
+import us.shirecraft.easteregghunt.thanksgiving.Turkey;
 
 import java.io.IOException;
 import java.util.*;
@@ -141,6 +145,11 @@ public class EasterEggHunt extends JavaPlugin {
             _treasure.put(Gumballs.class, 30);
             _treasure.put(SpookyPenguin.class, 2);
             _treasure.put(TrickTreatBasket.class, 60);
+        } else if(getDefaultHuntType().equals("thanksgiving")) {
+            _treasure.put(Turkey.class, 10);
+            _treasure.put(RoastDinner.class, 20);
+            _treasure.put(NutRoast.class, 20);
+            _treasure.put(HotCocoa.class, 50);
         } else if(getDefaultHuntType().equals("christmas")) {
             _treasure.put(FestivePenguin.class, 2);
             _treasure.put(Gift.class, 90);
@@ -169,6 +178,11 @@ public class EasterEggHunt extends JavaPlugin {
             _data.put(Gumballs.class, 30f / sum);
             _data.put(SpookyPenguin.class, 2f / sum);
             _data.put(TrickTreatBasket.class, 60f / sum);
+        } else if(getDefaultHuntType().equals("thanksgiving")) {
+            _data.put(Turkey.class, 10f / sum);
+            _data.put(RoastDinner.class, 20f / sum);
+            _data.put(NutRoast.class, 20f / sum);
+            _data.put(HotCocoa.class, 50f / sum);
         } else if(getDefaultHuntType().equals("christmas")) {
             _data.put(FestivePenguin.class, 2f / sum);
             _data.put(Gift.class, 90f / sum);
