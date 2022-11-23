@@ -52,6 +52,8 @@ public class EggListener implements Listener {
                 if(!regionsEggWasFoundIn.contains(regionName))
                 {
                     player.sendMessage("§4 ** Sorry, there was a problem with the treasure you found and it has not been counted.");
+
+                    ev.setCancelled(true);
                     return;
                 }
 

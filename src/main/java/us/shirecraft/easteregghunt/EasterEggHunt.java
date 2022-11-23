@@ -21,14 +21,10 @@ import org.bukkit.scheduler.BukkitTask;
 import us.shirecraft.easteregghunt.christmas.*;
 import us.shirecraft.easteregghunt.easter.*;
 import us.shirecraft.easteregghunt.halloween.*;
-import us.shirecraft.easteregghunt.thanksgiving.HotCocoa;
-import us.shirecraft.easteregghunt.thanksgiving.NutRoast;
-import us.shirecraft.easteregghunt.thanksgiving.RoastDinner;
-import us.shirecraft.easteregghunt.thanksgiving.Turkey;
+import us.shirecraft.easteregghunt.thanksgiving.*;
 
 import java.io.IOException;
 import java.util.*;
-
 
 public class EasterEggHunt extends JavaPlugin {
     @Override
@@ -71,10 +67,11 @@ public class EasterEggHunt extends JavaPlugin {
         // Get names of worlds in config file
         Set<String> worlds;
         try {
+            assert hunts != null;
             worlds = hunts.getKeys(false);
         }
         catch(NullPointerException ex) {
-            worlds = new HashSet<String>();
+            worlds = new HashSet<>();
         }
 
         if(!worlds.isEmpty()) {
@@ -89,7 +86,7 @@ public class EasterEggHunt extends JavaPlugin {
                     // Get WG region manager for this world
                     RegionManager regionManager = getRegionContainer().get(BukkitAdapter.adapt(world));
 
-                    if(null!=regions && !regions.isEmpty()) {
+                    if(!regions.isEmpty()) {
                         // Get regions
                         LinkedHashSet<String> regions_tmp = (LinkedHashSet) regions.clone();
                         for (String regionName : regions_tmp) {
@@ -97,14 +94,17 @@ public class EasterEggHunt extends JavaPlugin {
                             boolean regionEnabled = _config.getBoolean("hunts." + worldName + "." + regionName + ".enabled");
 
                             // If enabled and region is defined in WorldGuard, then create hunt object and store hunt reference in ArrayList
-                            if (regionEnabled && regionManager.hasRegion(regionName)) {
-                                // Check type of hunt
-                                String huntType = ""; //_config.getString("hunts." + worldName + "." + regionName + ".type");
-                                huntType = validateHuntType(huntType);
+                            if (regionEnabled) {
+                                assert regionManager != null;
+                                if (regionManager.hasRegion(regionName)) {
+                                    // Check type of hunt
+                                    String huntType = ""; //_config.getString("hunts." + worldName + "." + regionName + ".type");
+                                    huntType = validateHuntType(huntType);
 
-                                ProtectedRegion region = regionManager.getRegion(regionName);
-                                Hunt hunt = new Hunt(this, world, regionManager, region, huntType);
-                                getHunts().add(hunt);
+                                    ProtectedRegion region = regionManager.getRegion(regionName);
+                                    Hunt hunt = new Hunt(this, world, regionManager, region, huntType);
+                                    getHunts().add(hunt);
+                                }
                             }
                         }
                     }
@@ -241,13 +241,13 @@ public class EasterEggHunt extends JavaPlugin {
         if(null == huntType || huntType.equals("")) {
             huntType = getDefaultHuntType();
         }
-        if(!Arrays.stream(VALID_HUNT_TYPES).anyMatch(huntType::equals)) {
+        if(Arrays.stream(VALID_HUNT_TYPES).noneMatch(huntType::equals)) {
             huntType = VALID_HUNT_TYPES[0];
         }
         return huntType;
     }
 
-    public boolean sendToWebServer(Player player, final String eggType, final String regionName) {
+    public void sendToWebServer(Player player, final String eggType, final String regionName) {
         if(!getConfig().getString("apiKey").equals("")) {
             final String playerUuid = player.getUniqueId().toString();
             final String playerName = player.getName();
@@ -277,7 +277,6 @@ public class EasterEggHunt extends JavaPlugin {
                 }
             });
         }
-        return false;
     }
 
     private FileConfiguration _config;

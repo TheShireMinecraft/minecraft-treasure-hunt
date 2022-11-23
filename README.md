@@ -4,8 +4,8 @@ Treasure hunts for WorldGuard regions. Supports poly and cuboid regions only. Su
 This plugin is provided free of charge with no guarantees that it will work, and no promise of support. Should you stumble upon this and try to use it, you're welcome to report any issues you may encounter in the 'Issues' tab and I'll try to help you. If you are trying to use the plugin without meeting the requirements set out below, this is not supported and I will be unable to offer any assistance.
 
 ## Requirements
-- Spigot or Paper v1.18.2
-- Item NBT API v2.9.2
+- Spigot or Paper v1.19
+- Item NBT API v2.10
 
 ## Configuration options
 ```
@@ -35,7 +35,7 @@ The data sent in the JSON payload has the following keys:
 The 'API Key' is sent as a query parameter in the GET request to the endpoint, with a name of 'k'.
 
 ### apiKey
-Token for authenticating your server against the score tracking API
+Token for authenticating your game server against the score tracking API
 
 ### hunts
 _**World and region names must be written in lowercase letters in config.yml**_
