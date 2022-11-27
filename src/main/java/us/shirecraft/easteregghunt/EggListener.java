@@ -12,11 +12,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import us.shirecraft.easteregghunt.halloween.BloodSpider;
 
 import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class EggListener implements Listener {
     public EggListener(EasterEggHunt plugin) {
@@ -52,7 +50,7 @@ public class EggListener implements Listener {
                 if(!regionsEggWasFoundIn.contains(regionName))
                 {
                     player.sendMessage("§4 ** Sorry, there was a problem with the treasure you found and it has not been counted.");
-
+                    ev.getItem().remove();
                     ev.setCancelled(true);
                     return;
                 }
