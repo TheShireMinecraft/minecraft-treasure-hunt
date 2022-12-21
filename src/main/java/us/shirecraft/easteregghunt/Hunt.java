@@ -80,7 +80,7 @@ public class Hunt {
                     public void run() {
                         Collection<Entity> entities = world.getNearbyEntities(dropLocation, 64, world.getMaxHeight(),64, (e) -> e.getType() == EntityType.DROPPED_ITEM);
                         if(entities.size() <= 8) {
-                            world.dropItemNaturally(dropLocation, eggItem);
+                            world.dropItem(dropLocation, eggItem);
                         }
                     }
                 }.runTask(plugin);
