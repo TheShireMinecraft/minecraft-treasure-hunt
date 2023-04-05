@@ -4,8 +4,8 @@ Treasure hunts for WorldGuard regions. Supports poly and cuboid regions only. Su
 This plugin is provided free of charge with no guarantees that it will work, and no promise of support. Should you stumble upon this and try to use it, you're welcome to report any issues you may encounter in the 'Issues' tab and I'll try to help you. If you are trying to use the plugin without meeting the requirements set out below, this is not supported and I will be unable to offer any assistance.
 
 ## Requirements
-- Spigot or Paper v1.19
-- Item NBT API v2.10
+- Spigot or Paper v1.19.3 (earlier versions may work but this is not guaranteed)
+- Item NBT API v2.11.2
 
 ## Configuration options
 ```
