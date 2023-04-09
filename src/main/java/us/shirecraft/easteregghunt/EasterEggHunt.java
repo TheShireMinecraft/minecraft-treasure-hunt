@@ -10,6 +10,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -247,8 +248,9 @@ public class EasterEggHunt extends JavaPlugin {
         return huntType;
     }
 
-    public void sendToWebServer(Player player, final String eggType, final String regionName) {
-        if(!getConfig().getString("apiKey").equals("")) {
+    public void sendToWebServer(Player player, final String eggType, final String regionName, final String worldName) {
+        var apiKey = getConfig().getString("apiKey");
+        if(apiKey != null && !apiKey.equals("")) {
             final String playerUuid = player.getUniqueId().toString();
             final String playerName = player.getName();
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
@@ -264,11 +266,10 @@ public class EasterEggHunt extends JavaPlugin {
                 String key = getConfig().getString("apiKey");
 
                 StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
-                HttpClient httpClient = HttpClientBuilder.create().build();
-                HttpPost request = new HttpPost(endpoint + key);
-                request.setEntity(entity);
 
-                try {
+                try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+                    HttpPost request = new HttpPost(endpoint + key);
+                    request.setEntity(entity);
                     httpClient.execute(request);
                 } catch (ClientProtocolException e) {
                     getLogger().warning(" ! Encountered ClientProtocolException when attempting to transmit data");

@@ -138,7 +138,7 @@ public class EggListener implements Listener {
                     player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
                     world.spawnParticle(Particle.SPELL_INSTANT, eggLocation, 5);
                     ev.getItem().remove();
-                    plugin.sendToWebServer(player, treasureType, regionName);
+                    plugin.sendToWebServer(player, treasureType, regionName, world.getName());
                 }
             }
             ev.setCancelled(true);
