@@ -67,7 +67,7 @@ public class Hunt {
                     () -> world
                         .getNearbyEntities(boundingBox)
                         .stream()
-                        .anyMatch(x -> x instanceof Player)
+                        .anyMatch(x -> x instanceof Player player && !player.hasMetadata("NPC"))
                 ).get();
             } catch (InterruptedException | ExecutionException e) {
                 anyPlayerIsNearDropLocation = true;

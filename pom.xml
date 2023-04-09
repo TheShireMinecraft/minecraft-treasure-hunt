@@ -6,7 +6,7 @@
 
     <groupId>us.shirecraft</groupId>
     <artifactId>EasterEggHunt</artifactId>
-    <version>0.4.16</version>
+    <version>0.4.17</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -26,7 +26,7 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/Blitheness/spigot-easteregghunt/issues</url>
+        <url>https://github.com/TheShireMinecraft/minecraft-treasure-hunt/issues</url>
     </issueManagement>
 
     <repositories>
