@@ -1,18 +1,18 @@
-main: us.shirecraft.easteregghunt.EasterEggHunt
-name: EasterEggHunt
-version: '0.4.19'
+main: us.shirecraft.treasurehunt.TreasureHunt
+name: TreasureHunt
+version: '0.5.0'
 description: "Treasure hunt using WorldGuard regions"
-api-version: 1.19
+api-version: 1.20
 load: POSTWORLD
 author: Blitheness
 website: shirecraft.us
 depend: [NBTAPI,WorldGuard]
 prefix: TreasureHunt
 commands:
-  egghunt:
-    aliases: egg
+  treasurehunt:
+    aliases: hunt1
     description: Manage the treasure hunt plugin
 permissions:
-  egghunt.manage:
+  treasurehunt.manage:
     description: Ability to start or end a hunt
     default: op

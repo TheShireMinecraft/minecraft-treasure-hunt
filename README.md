@@ -9,7 +9,7 @@ This plugin is provided free of charge with no guarantees that it will work, and
 
 ## Configuration options
 ```
-eggHuntEnabled: false
+treasureHuntEnabled: false
 apiEndpoint: ''
 apikey: ''
 hunts:
@@ -18,19 +18,20 @@ hunts:
       enabled: true
 ```
 
-### eggHuntEnabled
-true if the plugin should attempt to initialise and start egg hunts.
-false if egg hunts are globally disabled and the plugin should do nothing.
+### treasureHuntEnabled
+true if the plugin should attempt to initialise and start treasure hunts.
+false if treasure hunts are globally disabled and the plugin should do nothing.
 
 ### apiEndpoint
 URL of API endpoint for keeping track of player scores, without a trailing slash.
-_e.g. apiEndpoint: 'https://example.com/egg-hunt-api'_
+_e.g. apiEndpoint: 'https://example.com/treasure-hunt-api'_
 
 The data sent in the JSON payload has the following keys:
 - uuid (player UUID)
 - name (player name)
 - egg (name of the item found)
 - region (ID of the WorldGuard region the item was found in)
+- world (name of world where item was found)
 
 The 'API Key' is sent as a query parameter in the GET request to the endpoint, with a name of 'k'.
 
@@ -39,5 +40,5 @@ Token for authenticating your game server against the score tracking API
 
 ### hunts
 _**World and region names must be written in lowercase letters in config.yml**_
-Tree comprising world names, and regions within those worlds where egg hunts are to be configured.
-Set 'enabled' _(boolean)_ below a region name to either **true** or **false** to enable or disable an egg hunt in this region.
+Tree comprising world names, and regions within those worlds where treasure hunts are to be configured.
+Set 'enabled' _(boolean)_ below a region name to either **true** or **false** to enable or disable a treasure hunt in this region.

@@ -1,7 +1,7 @@
 # - - - - - - - - - - - - - - #
-# EasterEggHunt Configuration #
+# TreasureHunt Configuration #
 # - - - - - - - - - - - - - - #
-# --- eggHuntEnabled ---
+# --- treasureHuntEnabled ---
 # boolean. when set to false, plugin will do nothing.
 # --- apiEndpoint ---
 # The score tracking API endpoint without a trailing slash
@@ -12,7 +12,7 @@
 # If this value is invalid, 'easter' will be forced. Allowed values are 'halloween', 'thanksgiving', 'christmas' and 'easter'.
 # Hunt type value must be in LOWER-CASE letters.
 # --- hunts ---
-# WorldGuard regions where egg hunts are taking place. Use LOWER-CASE letters in world and region names. Timings are in seconds.
+# WorldGuard regions where treasure hunts are taking place. Use LOWER-CASE letters in world and region names. Timings are in seconds.
 # For example,
 #   hunts:
 #     world_name:
@@ -21,7 +21,7 @@
 #         friendly_name: 'Region Name'
 #         delay: 8
 
-eggHuntEnabled: false
+treasureHuntEnabled: false
 apiEndpoint: ''
 apiKey: ''
 defaultHuntType: 'easter'
