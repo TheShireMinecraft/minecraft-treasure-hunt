@@ -17,7 +17,7 @@ public class SnowTrailListener implements Listener {
         // Remove snow trail made by a snowman created by this plugin
         if(event.getEntity() instanceof Snowman snowman) {
             if(event.getNewState().getType() == Material.SNOW) {
-                boolean isPluginSnowman = snowman.hasMetadata("egghunt.random-snowman");
+                boolean isPluginSnowman = snowman.hasMetadata("treasurehunt.random-snowman");
                 if(isPluginSnowman) {
                     event.setCancelled(true);
                 }

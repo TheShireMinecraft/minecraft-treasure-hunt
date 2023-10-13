@@ -79,9 +79,9 @@ public class TreasureItem implements Comparable<TreasureItem> {
         // Add custom NBT tags
         _nbtItem = new NBTItem(_item);
         _nbtItem.setString("TreasureType", _name);
-        _nbtItem.setString("EggHuntType", _huntType);
+        _nbtItem.setString("TreasureHuntType", _huntType);
         _nbtItem.setBoolean("Unbreakable", true);
-        _nbtItem.setString("EggHuntRegion", _regionName);
+        _nbtItem.setString("TreasureHuntRegion", _regionName);
 
         return _nbtItem.getItem();
     }

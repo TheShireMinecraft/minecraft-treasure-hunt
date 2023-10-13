@@ -31,9 +31,9 @@ public class TreasureListener implements Listener {
         if(isTreasureItem(is)) {
             if(ev.getEntity() instanceof Player player) {
                 NBTItem nbtItem = new NBTItem(is);
-                String huntType = plugin.validateHuntType(nbtItem.getString("EggHuntType"));
+                String huntType = plugin.validateHuntType(nbtItem.getString("TreasureHuntType"));
                 String treasureType = nbtItem.getString("TreasureType");
-                String regionName = nbtItem.getString("EggHuntRegion");
+                String regionName = nbtItem.getString("TreasureHuntRegion");
 
                 Location treasureLocation = ev.getItem().getLocation();
                 World world = treasureLocation.getWorld();
@@ -125,7 +125,7 @@ public class TreasureListener implements Listener {
                     snowman.setInvulnerable(true);
                     snowman.setAware(false);
                     snowman.setFreezeTicks(snowman.getMaxFreezeTicks());
-                    snowman.setMetadata("egghunt.random-snowman", new FixedMetadataValue(plugin, true));
+                    snowman.setMetadata("treasurehunt.random-snowman", new FixedMetadataValue(plugin, true));
 
                     world.spawnParticle(Particle.SNOWFLAKE, snowman.getLocation(), 2);
                     world.playSound(snowman.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 1);

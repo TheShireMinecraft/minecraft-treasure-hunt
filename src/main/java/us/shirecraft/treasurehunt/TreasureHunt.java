@@ -36,12 +36,12 @@ public class TreasureHunt extends JavaPlugin {
         _hunts = new ArrayList<>();
         _tasks = new ArrayList<>();
 
-        // Egg hunt enabled?
+        // Check if hunts are globally disabled
         if(!_config.getBoolean("treasureHuntEnabled")) {
             getLogger().info("Treasure hunts globally disabled in config.yml. Plugin will disable itself.");
             getServer().getPluginManager().disablePlugin(this);
         } else {
-            // Initialise egg hunts
+            // Initialise treasure hunts
             new TreasureListener(this);
             new SnowTrailListener(this);
             initialiseHunts();
@@ -116,8 +116,8 @@ public class TreasureHunt extends JavaPlugin {
             }
         }
         if(!getHunts().isEmpty()) {
-            registerEggs();
-            startEggHunts();
+            registerTreasureItems();
+            startTreasureHunts();
         } else {
             getLogger().info("No treasure hunts are enabled in the plugin's config.yml file, or it contains spelling mistakes.");
         }
@@ -126,7 +126,7 @@ public class TreasureHunt extends JavaPlugin {
     /**
      * This is done badly
      */
-    private void registerEggs() {
+    private void registerTreasureItems() {
         getLogger().info("The default hunt type is " + getDefaultHuntType());
 
         _treasure     = new HashMap<>();
@@ -204,7 +204,7 @@ public class TreasureHunt extends JavaPlugin {
         }
     }
 
-    private void startEggHunts() {
+    private void startTreasureHunts() {
         for (Hunt hunt : getHunts()) {
             Runnable huntTask = new HuntTask(hunt);
             _tasks.add(
