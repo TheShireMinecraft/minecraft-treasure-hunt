@@ -21,6 +21,10 @@ import org.bukkit.scheduler.BukkitTask;
 import us.shirecraft.treasurehunt.christmas.*;
 import us.shirecraft.treasurehunt.easter.*;
 import us.shirecraft.treasurehunt.halloween.*;
+import us.shirecraft.treasurehunt.party.PartyCrab;
+import us.shirecraft.treasurehunt.party.PartyHat;
+import us.shirecraft.treasurehunt.party.PartySlime;
+import us.shirecraft.treasurehunt.party.RainbowCake;
 import us.shirecraft.treasurehunt.thanksgiving.*;
 
 import java.io.IOException;
@@ -162,6 +166,12 @@ public class TreasureHunt extends JavaPlugin {
             _treasure.put(PlateOfCookies.class, 40);
             _treasure.put(ReindeerPlushy.class, 12);
             _treasure.put(Snowman.class, 40);
+        } else if(getDefaultHuntType().equals("party")) {
+            _treasure.put(us.shirecraft.treasurehunt.party.Cupcake.class, 90);
+            _treasure.put(PartyHat.class, 50);
+            _treasure.put(PartyCrab.class, 20);
+            _treasure.put(RainbowCake.class, 5);
+            _treasure.put(PartySlime.class, 3);
         }
 
         float sum = (float) _treasure.values().stream().mapToDouble(i->i).sum();
@@ -195,6 +205,12 @@ public class TreasureHunt extends JavaPlugin {
             _data.put(PlateOfCookies.class, 40f / sum);
             _data.put(ReindeerPlushy.class, 12f / sum);
             _data.put(Snowman.class, 40f / sum);
+        } else if(getDefaultHuntType().equals("party")) {
+            _data.put(us.shirecraft.treasurehunt.party.Cupcake.class, 90f / sum);
+            _data.put(PartyHat.class, 50f / sum);
+            _data.put(PartyCrab.class, 20f / sum);
+            _data.put(RainbowCake.class, 5f / sum);
+            _data.put(PartySlime.class, 3f / sum);
         }
 
         float balancedSum = 0f;
@@ -265,7 +281,7 @@ public class TreasureHunt extends JavaPlugin {
                         + "\"uuid\":\"" + playerUuid + "\","
                         + "\"name\":\""+ playerName +"\","
                         + "\"egg\":\"" + eggType + "\","
-                        + "\"region\":\"" + regionName + "\""
+                        + "\"region\":\"" + regionName + "\","
                         + "\"world\":\"" + worldName + "\""
                         + "}";
 
@@ -313,5 +329,5 @@ public class TreasureHunt extends JavaPlugin {
     @SuppressWarnings("FieldCanBeLocal")
     private final long TASK_INTERVAL_TICKS = TICKS_PER_SECOND * 15;
 
-    private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "thanksgiving", "christmas"};
+    private final String[] VALID_HUNT_TYPES = new String[] {"easter", "halloween", "thanksgiving", "christmas", "party"};
 }

@@ -9,7 +9,7 @@
 # API key for score tracking for this server
 # --- defaultHuntType ---
 # The default hunt type to use if it is not specified for a hunt, or if there is a spelling error.
-# If this value is invalid, 'easter' will be forced. Allowed values are 'halloween', 'thanksgiving', 'christmas' and 'easter'.
+# If this value is invalid, 'easter' will be forced. Allowed values are 'halloween', 'thanksgiving', 'party', 'christmas' and 'easter'.
 # Hunt type value must be in LOWER-CASE letters.
 # --- hunts ---
 # WorldGuard regions where treasure hunts are taking place. Use LOWER-CASE letters in world and region names. Timings are in seconds.
