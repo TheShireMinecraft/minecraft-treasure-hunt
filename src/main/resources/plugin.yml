@@ -1,6 +1,6 @@
 main: us.shirecraft.treasurehunt.TreasureHunt
 name: TreasureHunt
-version: '0.5.3'
+version: '0.5.4'
 description: "Treasure hunt using WorldGuard regions"
 api-version: 1.20
 load: POSTWORLD
@@ -10,7 +10,7 @@ depend: [NBTAPI,WorldGuard]
 prefix: TreasureHunt
 commands:
   treasurehunt:
-    aliases: hunt1
+    aliases: hunt
     description: Manage the treasure hunt plugin
 permissions:
   treasurehunt.manage:

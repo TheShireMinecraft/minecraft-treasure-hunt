@@ -3,6 +3,7 @@ package us.shirecraft.treasurehunt;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedPolygonalRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -106,18 +107,38 @@ public class Hunt {
     }
 
     private BlockVector3 randomPoint(ProtectedRegion mRegion) {
-        int xMin = mRegion.getMinimumPoint().getBlockX();
-        int xMax = mRegion.getMaximumPoint().getBlockX();
+        int xMin = Integer.MAX_VALUE, xMax = Integer.MIN_VALUE,
+            zMin = Integer.MAX_VALUE, zMax = Integer.MIN_VALUE;
+        if(mRegion instanceof ProtectedPolygonalRegion polyRegion) {
+            if(polyRegion.getPoints().isEmpty()) {
+                return null;
+            }
+            for(var point : polyRegion.getPoints()) {
+                int x = point.getBlockX();
+                int z = point.getBlockZ();
+                if(x < xMin) { xMin = x; }
+                if(x > xMax) { xMax = x; }
+                if(z < zMin) { zMin = z; }
+                if(z > zMax) { zMax = z; }
+            }
+        }
+        else {
+            xMin = mRegion.getMinimumPoint().getBlockX();
+            xMax = mRegion.getMaximumPoint().getBlockX();
+            zMin = mRegion.getMinimumPoint().getBlockZ();
+            zMax = mRegion.getMaximumPoint().getBlockZ();
+        }
+
+        // Swap values if required
         if (xMin > xMax) {
             xMin = xMin ^ xMax ^ (xMax = xMin);
         }
-        int zMin = mRegion.getMinimumPoint().getBlockZ();
-        int zMax = mRegion.getMaximumPoint().getBlockZ();
         if (zMin > zMax) {
             zMin = zMin ^ zMax ^ (zMax = zMin);
         }
 
         Bukkit.getLogger().info("xMin: " + xMin + " | xMax: " + xMax + " | zMin: " + zMin + " | zMax: " + zMax);
+
 
         int randX = getRandom(xMin, xMax);
         int randZ = getRandom(zMin, zMax);
