@@ -78,9 +78,16 @@ public class Hunt {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        Collection<Entity> entities = world.getNearbyEntities(dropLocation, 64, world.getMaxHeight(),64, (e) -> e.getType() == EntityType.DROPPED_ITEM);
+                        Collection<Entity> entities = world.getNearbyEntities(
+                            dropLocation,
+                            64,
+                            world.getMaxHeight(),
+                            64,
+                            (e) -> e.getType() == EntityType.DROPPED_ITEM
+                        );
                         if(entities.size() <= 8) {
-                            world.dropItem(dropLocation, eggItem);
+                            var droppedItem = world.dropItem(dropLocation.add(.5, .5, .5), eggItem);
+                            droppedItem.setVelocity(droppedItem.getVelocity().zero());
                         }
                     }
                 }.runTask(plugin);
@@ -101,8 +108,16 @@ public class Hunt {
     private BlockVector3 randomPoint(ProtectedRegion mRegion) {
         int xMin = mRegion.getMinimumPoint().getBlockX();
         int xMax = mRegion.getMaximumPoint().getBlockX();
+        if (xMin > xMax) {
+            xMin = xMin ^ xMax ^ (xMax = xMin);
+        }
         int zMin = mRegion.getMinimumPoint().getBlockZ();
         int zMax = mRegion.getMaximumPoint().getBlockZ();
+        if (zMin > zMax) {
+            zMin = zMin ^ zMax ^ (zMax = zMin);
+        }
+
+        Bukkit.getLogger().info("xMin: " + xMin + " | xMax: " + xMax + " | zMin: " + zMin + " | zMax: " + zMax);
 
         int randX = getRandom(xMin, xMax);
         int randZ = getRandom(zMin, zMax);
@@ -123,6 +138,9 @@ public class Hunt {
     }
 
     private int getRandom(int min, int max) {
+        if (min == max) {
+            return min;
+        }
         return random.nextInt(max - min) + min;
     }
 

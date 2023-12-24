@@ -1,8 +1,5 @@
 package us.shirecraft.treasurehunt;
 
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import de.tr7zw.nbtapi.NBTItem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -14,8 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import us.shirecraft.treasurehunt.helpers.AntiCheatHelper;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class TreasureListener implements Listener {
@@ -39,17 +36,7 @@ public class TreasureListener implements Listener {
                 World world = treasureLocation.getWorld();
                 assert world != null;
 
-                var adaptedTreasureWorld = BukkitAdapter.adapt(world);
-                var adaptedTreasureLocation = BukkitAdapter.adapt(treasureLocation).toVector().toBlockPoint();
-                var wgRegionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
-                var regionsTreasureWasFoundIn = Objects.requireNonNull(wgRegionContainer.get(adaptedTreasureWorld))
-                        .getApplicableRegions(adaptedTreasureLocation)
-                        .getRegions()
-                        .stream()
-                        .map(ProtectedRegion::getId)
-                        .toList();
-
-                if(!regionsTreasureWasFoundIn.contains(regionName))
+                if(!AntiCheatHelper.locationIsWithinRegion(treasureLocation, regionName))
                 {
                     player.sendMessage(
                         Component.text(

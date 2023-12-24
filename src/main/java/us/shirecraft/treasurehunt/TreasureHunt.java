@@ -18,14 +18,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-import us.shirecraft.treasurehunt.christmas.*;
-import us.shirecraft.treasurehunt.easter.*;
-import us.shirecraft.treasurehunt.halloween.*;
-import us.shirecraft.treasurehunt.party.PartyCrab;
-import us.shirecraft.treasurehunt.party.PartyHat;
-import us.shirecraft.treasurehunt.party.PartySlime;
-import us.shirecraft.treasurehunt.party.RainbowCake;
-import us.shirecraft.treasurehunt.thanksgiving.*;
+import us.shirecraft.treasurehunt.items.christmas.*;
+import us.shirecraft.treasurehunt.items.easter.*;
+import us.shirecraft.treasurehunt.items.halloween.*;
+import us.shirecraft.treasurehunt.items.party.PartyCrab;
+import us.shirecraft.treasurehunt.items.party.PartyHat;
+import us.shirecraft.treasurehunt.items.party.PartySlime;
+import us.shirecraft.treasurehunt.items.party.RainbowCake;
+import us.shirecraft.treasurehunt.items.thanksgiving.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -167,7 +167,7 @@ public class TreasureHunt extends JavaPlugin {
             _treasure.put(ReindeerPlushy.class, 12);
             _treasure.put(Snowman.class, 40);
         } else if(getDefaultHuntType().equals("party")) {
-            _treasure.put(us.shirecraft.treasurehunt.party.Cupcake.class, 90);
+            _treasure.put(us.shirecraft.treasurehunt.items.party.Cupcake.class, 90);
             _treasure.put(PartyHat.class, 50);
             _treasure.put(PartyCrab.class, 20);
             _treasure.put(RainbowCake.class, 5);
@@ -206,7 +206,7 @@ public class TreasureHunt extends JavaPlugin {
             _data.put(ReindeerPlushy.class, 12f / sum);
             _data.put(Snowman.class, 40f / sum);
         } else if(getDefaultHuntType().equals("party")) {
-            _data.put(us.shirecraft.treasurehunt.party.Cupcake.class, 90f / sum);
+            _data.put(us.shirecraft.treasurehunt.items.party.Cupcake.class, 90f / sum);
             _data.put(PartyHat.class, 50f / sum);
             _data.put(PartyCrab.class, 20f / sum);
             _data.put(RainbowCake.class, 5f / sum);

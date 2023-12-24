@@ -4,11 +4,12 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import de.tr7zw.nbtapi.NBTItem;
-import io.github.coachluck.backpacksplus.utils.multiversion.ReflectionUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,12 +67,21 @@ public class TreasureItem implements Comparable<TreasureItem> {
         assert headMeta != null;
 
         // Set name and lore
-        headMeta.setDisplayName(_name);
-        headMeta.setLore(List.of("I've found some Treasure!"));
+        headMeta.displayName(Component.text(_name));
+        headMeta.lore(List.of(
+            Component.text("I've found some Treasure!")
+        ));
 
         // Set profile
         Class<?> headMetaClass = headMeta.getClass();
-        ReflectionUtil.getField(headMetaClass, "profile", GameProfile.class).set(headMeta, profile);
+        Field profileField;
+        try {
+            profileField = headMetaClass.getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(headMeta, profile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException iae ) {
+            iae.printStackTrace();
+        }
 
         // Replace item meta
         _item.setItemMeta(headMeta);
@@ -96,6 +106,7 @@ public class TreasureItem implements Comparable<TreasureItem> {
     }
 
     private int _value;
+    @SuppressWarnings("unused")
     private int _frequency;
     private String _playerUuid;
     private NBTItem _nbtItem;
