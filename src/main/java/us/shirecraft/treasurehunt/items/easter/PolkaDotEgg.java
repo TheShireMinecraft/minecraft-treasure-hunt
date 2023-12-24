@@ -9,6 +9,6 @@ public class PolkaDotEgg extends TreasureItem {
         setPlayerUuid(POLKADOT_EGG_PLAYER_UUID);
     }
 
-    private final String POLKADOT_EGG_TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjJjZDVkZjlkN2YxZmE4MzQxZmNjZTJmM2MxMThlMmY1MTdlNGQyZDk5ZGYyYzUxZDYxZDkzZWQ3ZjgzZTEzIn19fQ==";
+    private final String POLKADOT_EGG_TEXTURE     = "b2cd5df9d7f1fa8341fcce2f3c118e2f517e4d2d99df2c51d61d93ed7f83e13";
     private final String POLKADOT_EGG_PLAYER_UUID = "259631f6-804d-4ce5-9e67-d47e236728d2";
 }

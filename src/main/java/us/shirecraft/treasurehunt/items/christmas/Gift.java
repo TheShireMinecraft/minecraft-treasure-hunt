@@ -9,6 +9,6 @@ public class Gift extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTAzYmQwMDQyMTcyOWNkNjM1Y2QzYjQ4MjQzNDMwYWQ0N2NmNzA3MDE4YTU5MTZmZjU5NTQ5ZDVlY2Q2Zjg3OSJ9fX0=";
+    private final String TEXTURE     = "a03bd00421729cd635cd3b48243430ad47cf707018a5916ff59549d5ecd6f879";
     private final String PLAYER_UUID = "3167ba84-a532-4956-9db3-a312e2aaa12e";
 }

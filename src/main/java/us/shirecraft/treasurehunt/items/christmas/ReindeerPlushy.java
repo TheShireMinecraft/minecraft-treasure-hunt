@@ -9,6 +9,6 @@ public class ReindeerPlushy extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA1MDU0NTcxMjI4MzczYzVjZGI4NGYyMTY1YzlhMjAwYmFmNTU0NDUyODU1NDhlYWNhZTA1OTRjYjY1OTJlZSJ9fX0=";
+    private final String TEXTURE     = "f05054571228373c5cdb84f2165c9a200baf55445285548eacae0594cb6592ee";
     private final String PLAYER_UUID = "f328c42a-a87b-4825-8e62-7b8b21e3a6ba";
 }

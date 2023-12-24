@@ -9,6 +9,6 @@ public class HotCocoa extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjY4ZDgxZjJhNDk1Y2Y3NjdlOTdkNTZlYmNiNGRmN2JiMWRmMDU1OWQyNzM1Y2JjOTlmN2M3OGVlZmY0ZjY4ZiJ9fX0=";
+    private final String TEXTURE     = "268d81f2a495cf767e97d56ebcb4df7bb1df0559d2735cbc99f7c78eeff4f68f";
     private final String PLAYER_UUID = "270927b6-76ac-4274-a2ba-948b9818e7eb";
 }

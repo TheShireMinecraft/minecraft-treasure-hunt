@@ -9,6 +9,6 @@ public class TrickTreatBasket extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzVhOWNjZTMyMjNiZTFiYjkyN2JkMjYzNWUxOGI2NDQ2MDFkNTIxYjY0Y2EwNjhjNTQxZDNiYzk2MDkwOGMzYSJ9fX0=";
+    private final String TEXTURE     = "35a9cce3223be1bb927bd2635e18b644601d521b64ca068c541d3bc960908c3a";
     private final String PLAYER_UUID = "82af1c74-0b63-4e3f-8f53-7fdf99b5261b";
 }

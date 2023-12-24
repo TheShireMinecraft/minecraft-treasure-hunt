@@ -9,6 +9,6 @@ public class BloodSpider extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODMwMDk4NmVkMGEwNGVhNzk5MDRmNmFlNTNmNDllZDNhMGZmNWIxZGY2MmJiYTYyMmVjYmQzNzc3ZjE1NmRmOCJ9fX0=";
+    private final String TEXTURE     = "8300986ed0a04ea79904f6ae53f49ed3a0ff5b1df62bba622ecbd3777f156df8";
     private final String PLAYER_UUID = "bf0be255-89ce-415a-b7ca-037424dce343";
 }

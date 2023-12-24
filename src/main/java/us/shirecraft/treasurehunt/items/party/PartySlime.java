@@ -10,6 +10,6 @@ public class PartySlime extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmU3Mjk0ZTMzMDg3MmRlOGM4NzA4NWY5NGI1OGMwYjhhNDJlZDJjNTljZGJjNmVmZGM1MjZjNWI1OGNmZjdiIn19fQ==";
+    private final String TEXTURE     = "fe7294e330872de8c87085f94b58c0b8a42ed2c59cdbc6efdc526c5b58cff7b";
     private final String PLAYER_UUID = "97559785-83dd-4c39-8866-63aeefad775a";
 }

@@ -9,6 +9,6 @@ public class Gumballs extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2E5NDNiYWY3MTQ1ODU5NmFmZjRlYmE4NzlmOGFjNWQyYmEyNjdjOTgzODVlNjc2NzNmNDhlYmVhNWZhIn19fQ==";
+    private final String TEXTURE     = "3a943baf71458596aff4eba879f8ac5d2ba267c98385e67673f48ebea5fa";
     private final String PLAYER_UUID = "aab2216a-e1f7-41a4-a6e5-118fb051fa5d";
 }

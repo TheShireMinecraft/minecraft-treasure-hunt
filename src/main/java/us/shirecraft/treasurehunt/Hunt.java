@@ -50,15 +50,15 @@ public class Hunt {
 
         if(null != randomPoint) {
             Location dropLocation = BukkitAdapter.adapt(world, randomPoint);
-
+            var maxPlayerDistance = 360d;
             // Only drop treasure if a player is nearby
             BoundingBox boundingBox = new BoundingBox(
-                dropLocation.getX() - 350d,
-                50d,
-                dropLocation.getZ() - 350d,
-                dropLocation.getX() + 350d,
-                256d,
-                dropLocation.getZ() + 350d
+                dropLocation.getX() - maxPlayerDistance,
+                48d, // min height
+                dropLocation.getZ() - maxPlayerDistance,
+                dropLocation.getX() + maxPlayerDistance,
+                288d, // max height
+                dropLocation.getZ() + maxPlayerDistance
             );
 
             boolean anyPlayerIsNearDropLocation;
@@ -136,9 +136,6 @@ public class Hunt {
         if (zMin > zMax) {
             zMin = zMin ^ zMax ^ (zMax = zMin);
         }
-
-        Bukkit.getLogger().info("xMin: " + xMin + " | xMax: " + xMax + " | zMin: " + zMin + " | zMax: " + zMax);
-
 
         int randX = getRandom(xMin, xMax);
         int randZ = getRandom(zMin, zMax);

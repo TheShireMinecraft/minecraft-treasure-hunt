@@ -9,6 +9,6 @@ public class SpookyPenguin extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTFiZjEzZWFkMzBmMTRkMWE2ODdlNjg4OWM1MmQ3NzIyMWMxNGNkZThlY2VlNGFlYjI4MDMzYWRlNzNiMWNkOSJ9fX0=";
+    private final String TEXTURE     = "51bf13ead30f14d1a687e6889c52d77221c14cde8ecee4aeb28033ade73b1cd9";
     private final String PLAYER_UUID = "8942cb66-9cf2-4828-97c8-68ffc59e92a7";
 }

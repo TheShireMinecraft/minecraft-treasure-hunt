@@ -9,6 +9,6 @@ public class GingerbreadMan extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTc5YzkzMmMzMWUxNmZkNjVjZTNjOTljY2E5ODY0NWFiMmYxNmIyNjIzYjVlMWU3MmM2ZGU2ODlhNjUxODdmIn19fQ==";
+    private final String TEXTURE     = "a79c932c31e16fd65ce3c99cca98645ab2f16b2623b5e1e72c6de689a65187f";
     private final String PLAYER_UUID = "d4ec2666-2001-4ecf-909c-b9ecff73706e";
 }

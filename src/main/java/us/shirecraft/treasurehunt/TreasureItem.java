@@ -1,17 +1,18 @@
 package us.shirecraft.treasurehunt;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
 import de.tr7zw.nbtapi.NBTItem;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
-import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class TreasureItem implements Comparable<TreasureItem> {
     public TreasureItem(String name, int value, int frequency) {
@@ -53,18 +54,21 @@ public class TreasureItem implements Comparable<TreasureItem> {
         _item = new ItemStack(Material.PLAYER_HEAD, 1);
 
         // Create game profile
-        GameProfile profile = new GameProfile(UUID.fromString(_playerUuid), "unknown");
-        PropertyMap propertyMap = profile.getProperties();
-        if (propertyMap == null) {
-            return _item;
-        }
+        var playerProfile = Bukkit.createProfile(UUID.fromString(_playerUuid), "unknown");
 
         // Set texture
-        propertyMap.put("textures", new Property("textures", _texture));
+        var currentTextures = playerProfile.getTextures();
+        try {
+            currentTextures.setSkin(new URL("http://textures.minecraft.net/texture/" + _texture));
+        } catch (MalformedURLException e) {
+            Bukkit.getLogger().log(Level.SEVERE, "Invalid texture URL", e);
+        }
+        playerProfile.setTextures(currentTextures);
 
         // Get meta class for reflection
-        ItemMeta headMeta = _item.getItemMeta();
-        assert headMeta != null;
+        ItemMeta itemMeta = _item.getItemMeta();
+        assert itemMeta != null;
+        SkullMeta headMeta = (SkullMeta) itemMeta;
 
         // Set name and lore
         headMeta.displayName(Component.text(_name));
@@ -73,15 +77,7 @@ public class TreasureItem implements Comparable<TreasureItem> {
         ));
 
         // Set profile
-        Class<?> headMetaClass = headMeta.getClass();
-        Field profileField;
-        try {
-            profileField = headMetaClass.getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(headMeta, profile);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException iae ) {
-            iae.printStackTrace();
-        }
+        headMeta.setPlayerProfile(playerProfile);
 
         // Replace item meta
         _item.setItemMeta(headMeta);

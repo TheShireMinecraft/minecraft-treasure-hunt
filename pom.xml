@@ -6,7 +6,7 @@
 
     <groupId>us.shirecraft</groupId>
     <artifactId>TreasureHunt</artifactId>
-    <version>0.5.5</version>
+    <version>0.5.6</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -60,12 +60,6 @@
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mojang</groupId>
-            <artifactId>authlib</artifactId>
-            <version>6.0.52</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

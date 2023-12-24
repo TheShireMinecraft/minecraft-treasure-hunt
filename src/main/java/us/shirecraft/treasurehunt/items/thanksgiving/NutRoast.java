@@ -9,6 +9,6 @@ public class NutRoast extends TreasureItem {
         setPlayerUuid(PLAYER_UUID);
     }
 
-    private final String TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOThlZWFmZGY2ZDdjNmM5OTQzZTQ0YmZjZmRiZTAzN2Q2YzE1ZDZkNWUzNTRjM2NjZjcyYmY4ODZjZGU0ZTFjNiJ9fX0=";
+    private final String TEXTURE     = "98eeafdf6d7c6c9943e44bfcfdbe037d6c15d6d5e354c3ccf72bf886cde4e1c6";
     private final String PLAYER_UUID = "37404cc5-1385-4be9-abd2-5c6cfbfaf6ce";
 }

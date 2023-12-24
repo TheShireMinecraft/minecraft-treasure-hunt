@@ -9,6 +9,6 @@ public class DragonEgg extends TreasureItem {
         setPlayerUuid(DRAGON_EGG_PLAYER_UUID);
     }
 
-    private final String DRAGON_EGG_TEXTURE     = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2MxNTFmYjU0YjIxZmU1NzY5ZmZiNDgyNWI1YmM5MmRhNzM2NTdmMjE0MzgwZTVkMDMwMWU0NWI2YzEzZjdkIn19fQ==";
+    private final String DRAGON_EGG_TEXTURE     = "3c151fb54b21fe5769ffb4825b5bc92da73657f214380e5d0301e45b6c13f7d";
     private final String DRAGON_EGG_PLAYER_UUID = "6b5afe13-b3b2-4c3c-a938-d6930e2d31c2";
 }
