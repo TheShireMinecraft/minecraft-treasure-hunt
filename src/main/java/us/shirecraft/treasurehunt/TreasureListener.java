@@ -38,7 +38,9 @@ public class TreasureListener implements Listener {
             World world = treasureLocation.getWorld();
             assert world != null;
 
-            if(!AntiCheatHelper.locationIsWithinRegion(treasureLocation, regionName))
+            if(!AntiCheatHelper.locationIsWithinRegion(treasureLocation, regionName)
+                || !nbtItem.hasTag("TreasureHuntConst")
+                || !nbtItem.getString("TreasureHuntConst").equals("TRHU"))
             {
                 player.sendMessage(
                     Component.text(
@@ -132,8 +134,12 @@ public class TreasureListener implements Listener {
                     if(null == snowman || null == world || null == player) {
                         return;
                     }
-                    world.spawnParticle(Particle.FLASH, snowman.getLocation(), 2);
-                    world.playSound(snowman.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
+                    try {
+                        world.spawnParticle(Particle.FLASH, snowman.getLocation(), 2);
+                        world.playSound(snowman.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
+                    } catch (Exception e) {
+                        plugin.getLogger().warning("Could not play snowman removal effects for " + player.getName());
+                    }
                     snowman.damage(8192d);
                     snowman.remove();
                 }, 40);

@@ -88,6 +88,7 @@ public class TreasureItem implements Comparable<TreasureItem> {
         _nbtItem.setString("TreasureHuntType", _huntType);
         _nbtItem.setBoolean("Unbreakable", true);
         _nbtItem.setString("TreasureHuntRegion", _regionName);
+        _nbtItem.setString("TreasureHuntConst", "TRHU");
         _nbtItem.setString("ItemId", UUID.randomUUID().toString()); // Stop treasure items stacking
 
         return _nbtItem.getItem();

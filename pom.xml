@@ -6,7 +6,7 @@
 
     <groupId>us.shirecraft</groupId>
     <artifactId>TreasureHunt</artifactId>
-    <version>0.6.4</version>
+    <version>0.6.5</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
