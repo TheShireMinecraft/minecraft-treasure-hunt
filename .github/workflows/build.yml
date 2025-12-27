@@ -20,4 +20,4 @@ jobs:
 
     - name: Build with Maven
       run: |
-        mvn clean package -q
+        mvn clean package -ntp
