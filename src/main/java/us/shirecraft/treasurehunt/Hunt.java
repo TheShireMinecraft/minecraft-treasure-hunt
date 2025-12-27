@@ -114,8 +114,8 @@ public class Hunt {
                 return null;
             }
             for(var point : polyRegion.getPoints()) {
-                int x = point.getBlockX();
-                int z = point.getBlockZ();
+                int x = point.x();
+                int z = point.z();
                 if(x < xMin) { xMin = x; }
                 if(x > xMax) { xMax = x; }
                 if(z < zMin) { zMin = z; }
@@ -123,10 +123,10 @@ public class Hunt {
             }
         }
         else {
-            xMin = mRegion.getMinimumPoint().getBlockX();
-            xMax = mRegion.getMaximumPoint().getBlockX();
-            zMin = mRegion.getMinimumPoint().getBlockZ();
-            zMax = mRegion.getMaximumPoint().getBlockZ();
+            xMin = mRegion.getMinimumPoint().x();
+            xMax = mRegion.getMaximumPoint().x();
+            zMin = mRegion.getMinimumPoint().z();
+            zMax = mRegion.getMaximumPoint().z();
         }
 
         // Swap values if required

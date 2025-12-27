@@ -10,7 +10,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 import us.shirecraft.treasurehunt.helpers.AntiCheatHelper;
 
@@ -141,15 +140,18 @@ public class TreasureListener implements Listener {
                 }
             }
             ev.setCancelled(true);
+            if (ev.getItem().isValid()) {
+                ev.getItem().remove();
+            }
         }
     }
 
     public boolean isTreasureItem(ItemStack is) {
-        if(is.getType() == Material.PLAYER_HEAD) {
-            NBTItem nbtItem = new NBTItem(is);
-            return nbtItem.getKeys().contains("TreasureType");
+        if(is.getType() != Material.PLAYER_HEAD) {
+            return false;
         }
-        return false;
+        NBTItem nbtItem = new NBTItem(is);
+        return nbtItem.getKeys().contains("TreasureType");
     }
 
     @SuppressWarnings("SameParameterValue")

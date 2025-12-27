@@ -265,7 +265,7 @@ public class TreasureHunt extends JavaPlugin {
     }
 
     public String validateHuntType(String huntType) {
-        if(null == huntType || huntType.equals("")) {
+        if(null == huntType || huntType.isEmpty()) {
             huntType = getDefaultHuntType();
         }
         if(Arrays.stream(VALID_HUNT_TYPES).noneMatch(huntType::equals)) {
@@ -276,7 +276,7 @@ public class TreasureHunt extends JavaPlugin {
 
     public void sendToWebServer(Player player, final String eggType, final String regionName, final String worldName) {
         var apiKey = getConfig().getString("apiKey");
-        if(apiKey != null && !apiKey.equals("")) {
+        if(apiKey != null && !apiKey.isEmpty()) {
             final String playerUuid = player.getUniqueId().toString();
             final String playerName = player.getName();
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
