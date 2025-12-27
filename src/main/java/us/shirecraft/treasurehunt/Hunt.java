@@ -84,7 +84,7 @@ public class Hunt {
                             64,
                             world.getMaxHeight(),
                             64,
-                            (e) -> e.getType() == EntityType.DROPPED_ITEM
+                            (e) -> e.getType() == EntityType.ITEM
                         );
                         if(entities.size() <= 8) {
                             var droppedItem = world.dropItem(dropLocation.add(.5, .5, .5), eggItem);

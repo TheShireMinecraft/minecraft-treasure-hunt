@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataType;
 import us.shirecraft.treasurehunt.helpers.AntiCheatHelper;
 
 import java.util.Random;
@@ -54,7 +55,7 @@ public class TreasureListener implements Listener {
                 if(getRandom(1,100) < 6 && huntType.equals("easter")) {
                     player.sendMessage("§a ** The egg hatched before you could collect it!");
 
-                    world.spawnParticle(Particle.EXPLOSION_LARGE, treasureLocation, 2);
+                    world.spawnParticle(Particle.EXPLOSION, treasureLocation, 2);
                     ev.getItem().remove();
 
                     Chicken chicken = (Chicken) world.spawnEntity(treasureLocation, EntityType.CHICKEN);
@@ -76,7 +77,7 @@ public class TreasureListener implements Listener {
                 if(getRandom(1,100) < 7 && huntType.equals("halloween") && treasureType.equals("Blood Spider")) {
                     player.sendMessage("§a ** It's... §a§lALIVE§a!");
 
-                    world.spawnParticle(Particle.EXPLOSION_LARGE, treasureLocation, 2);
+                    world.spawnParticle(Particle.EXPLOSION, treasureLocation, 2);
                     ev.getItem().remove();
 
                     CaveSpider spider = (CaveSpider) world.spawnEntity(treasureLocation, EntityType.CAVE_SPIDER);
@@ -97,13 +98,13 @@ public class TreasureListener implements Listener {
                 if(getRandom(1,100) <= 10 && huntType.equals("christmas") && treasureType.equals("Snowman")) {
                     player.sendMessage("§a ** The snowman sprung to life before you could collect it!");
 
-                    world.spawnParticle(Particle.SPELL_INSTANT, treasureLocation, 2);
+                    world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 2);
                     ev.getItem().remove();
 
                     Location spawnSnowmanLoc = treasureLocation.clone();
                     spawnSnowmanLoc.add(0, .05d, 0);
 
-                    Snowman snowman = (Snowman) world.spawnEntity(spawnSnowmanLoc, EntityType.SNOWMAN);
+                    Snowman snowman = (Snowman) world.spawnEntity(spawnSnowmanLoc, EntityType.SNOW_GOLEM);
                     snowman.setDerp(true);
                     snowman.setAI(false);
                     snowman.setTicksLived(1);
@@ -112,7 +113,11 @@ public class TreasureListener implements Listener {
                     snowman.setInvulnerable(true);
                     snowman.setAware(false);
                     snowman.setFreezeTicks(snowman.getMaxFreezeTicks());
-                    snowman.setMetadata("treasurehunt.random-snowman", new FixedMetadataValue(plugin, true));
+                    snowman.getPersistentDataContainer().set(
+                         plugin.getSnowmanKey(),
+                         PersistentDataType.BOOLEAN,
+                         true
+                    );
 
                     world.spawnParticle(Particle.SNOWFLAKE, snowman.getLocation(), 2);
                     world.playSound(snowman.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 1);
@@ -130,7 +135,7 @@ public class TreasureListener implements Listener {
                 }
                 else {
                     player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
-                    world.spawnParticle(Particle.SPELL_INSTANT, treasureLocation, 5);
+                    world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 5);
                     ev.getItem().remove();
                     plugin.sendToWebServer(player, treasureType, regionName, world.getName());
                 }

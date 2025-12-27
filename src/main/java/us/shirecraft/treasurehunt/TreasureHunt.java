@@ -12,6 +12,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -39,6 +40,9 @@ public class TreasureHunt extends JavaPlugin {
         // Create empty lists
         _hunts = new ArrayList<>();
         _tasks = new ArrayList<>();
+
+        // Keys
+        _snowmanKey = new NamespacedKey(this, "treasurehunt.random-snowman");
 
         // Check if hunts are globally disabled
         if(!_config.getBoolean("treasureHuntEnabled")) {
@@ -303,11 +307,17 @@ public class TreasureHunt extends JavaPlugin {
         }
     }
 
+    public NamespacedKey getSnowmanKey() {
+        return _snowmanKey;
+    }
+
     private FileConfiguration _config;
 
     private WorldGuard _worldGuard;
 
     private RegionContainer _regionContainer;
+
+    private NamespacedKey _snowmanKey;
 
     private ArrayList<Hunt> _hunts;
 
