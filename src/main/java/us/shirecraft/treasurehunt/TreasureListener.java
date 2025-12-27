@@ -99,7 +99,11 @@ public class TreasureListener implements Listener {
             if(getRandom(1,100) <= 10 && huntType.equals("christmas") && treasureType.equals("Snowman")) {
                 player.sendMessage("§a ** The snowman sprung to life before you could collect it!");
 
-                world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 2);
+                try {
+                    world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 2);
+                } catch (Exception e) {
+                    plugin.getLogger().warning("Could not spawn snowman particle for " + player.getName());
+                }
                 ev.getItem().remove();
 
                 Location spawnSnowmanLoc = treasureLocation.clone();
@@ -135,8 +139,12 @@ public class TreasureListener implements Listener {
                 }, 40);
             }
             else {
-                player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
-                world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 5);
+                try {
+                    player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
+                    world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 5);
+                } catch(Exception e) {
+                    plugin.getLogger().warning("Could not play treasure found effects for " + player.getName());
+                }
                 ev.getItem().remove();
                 plugin.sendToWebServer(player, treasureType, regionName, world.getName());
             }
