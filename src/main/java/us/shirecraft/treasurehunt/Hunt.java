@@ -43,7 +43,7 @@ public class Hunt {
     public void doTick() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if(!enabled) return;
         randomPointAttempts = 0;
-        TreasureItem treasure = chooseEgg().getDeclaredConstructor().newInstance();
+        TreasureItem treasure = chooseItem().getDeclaredConstructor().newInstance();
         treasure.setRegionName(region.getId());
         treasure.setHuntType(huntType);
         BlockVector3 randomPoint = randomPoint(region);
@@ -75,7 +75,7 @@ public class Hunt {
             }
 
             if(anyPlayerIsNearDropLocation) {
-                ItemStack eggItem = treasure.getItem();
+                ItemStack treasureItem = treasure.getItem();
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -87,7 +87,7 @@ public class Hunt {
                             (e) -> e.getType() == EntityType.ITEM
                         );
                         if(entities.size() <= 8) {
-                            var droppedItem = world.dropItem(dropLocation.add(.5, .5, .5), eggItem);
+                            var droppedItem = world.dropItem(dropLocation.add(.5, .5, .5), treasureItem);
                             droppedItem.setVelocity(droppedItem.getVelocity().zero());
                         }
                     }
@@ -96,11 +96,11 @@ public class Hunt {
         }
     }
 
-    public Class<? extends TreasureItem> chooseEgg() {
+    public Class<? extends TreasureItem> chooseItem() {
         float rand = new Random().nextFloat();
-        for(Class<? extends TreasureItem> eggClass : plugin.getBalancedData().keySet()) {
-            if(rand <= plugin.getBalancedData().get(eggClass)) {
-                return eggClass;
+        for(Class<? extends TreasureItem> treasureItemClass : plugin.getBalancedData().keySet()) {
+            if(rand <= plugin.getBalancedData().get(treasureItemClass)) {
+                return treasureItemClass;
             }
         }
         return null;

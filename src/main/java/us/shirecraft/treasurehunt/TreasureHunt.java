@@ -276,7 +276,7 @@ public class TreasureHunt extends JavaPlugin {
 
     public void sendToWebServer(
         Player player,
-        final String eggType,
+        final String treasureType,
         final String huntType,
         final String regionName,
         final String worldName
@@ -290,7 +290,7 @@ public class TreasureHunt extends JavaPlugin {
                         = "data={"
                         + "\"uuid\":\"" + playerUuid + "\","
                         + "\"player_name\":\""+ playerName +"\","
-                        + "\"item\":\"" + eggType + "\","
+                        + "\"item\":\"" + treasureType + "\","
                         + "\"hunt_type\":\"" + huntType + "\","
                         + "\"region\":\"" + regionName + "\","
                         + "\"world\":\"" + worldName + "\""
