@@ -152,7 +152,13 @@ public class TreasureListener implements Listener {
                     plugin.getLogger().warning("Could not play treasure found effects for " + player.getName());
                 }
                 ev.getItem().remove();
-                plugin.sendToWebServer(player, treasureType, regionName, world.getName());
+                plugin.sendToWebServer(
+                    player,
+                    treasureType,
+                    huntType,
+                    regionName,
+                    world.getName()
+                );
             }
         }
         ev.setCancelled(true);

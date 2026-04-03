@@ -1,12 +1,10 @@
 # - - - - - - - - - - - - - - #
-# TreasureHunt Configuration #
+# TreasureHunt Configuration  #
 # - - - - - - - - - - - - - - #
 # --- treasureHuntEnabled ---
 # boolean. when set to false, plugin will do nothing.
 # --- apiEndpoint ---
 # The score tracking API endpoint without a trailing slash
-# --- apiKey ---
-# API key for score tracking for this server
 # --- defaultHuntType ---
 # The default hunt type to use if it is not specified for a hunt, or if there is a spelling error.
 # If this value is invalid, 'easter' will be forced. Allowed values are 'halloween', 'thanksgiving', 'party', 'christmas' and 'easter'.
@@ -23,6 +21,5 @@
 
 treasureHuntEnabled: false
 apiEndpoint: ''
-apiKey: ''
 defaultHuntType: 'easter'
 hunts: []

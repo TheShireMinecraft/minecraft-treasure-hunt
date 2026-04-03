@@ -274,28 +274,32 @@ public class TreasureHunt extends JavaPlugin {
         return huntType;
     }
 
-    public void sendToWebServer(Player player, final String eggType, final String regionName, final String worldName) {
-        var apiKey = getConfig().getString("apiKey");
-        if(apiKey != null && !apiKey.isEmpty()) {
+    public void sendToWebServer(
+        Player player,
+        final String eggType,
+        final String huntType,
+        final String regionName,
+        final String worldName
+    ) {
+        var endpoint = getConfig().getString("apiEndpoint");
+        if(endpoint != null && !endpoint.isEmpty()) {
             final String playerUuid = player.getUniqueId().toString();
             final String playerName = player.getName();
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
                 String payload
                         = "data={"
                         + "\"uuid\":\"" + playerUuid + "\","
-                        + "\"name\":\""+ playerName +"\","
-                        + "\"egg\":\"" + eggType + "\","
+                        + "\"player_name\":\""+ playerName +"\","
+                        + "\"item\":\"" + eggType + "\","
+                        + "\"hunt_type\":\"" + huntType + "\","
                         + "\"region\":\"" + regionName + "\","
                         + "\"world\":\"" + worldName + "\""
                         + "}";
 
-                String endpoint = getConfig().getString("apiEndpoint");
-                String key = getConfig().getString("apiKey");
-
                 StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
 
                 try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-                    HttpPost request = new HttpPost(endpoint + key);
+                    HttpPost request = new HttpPost(endpoint);
                     request.setEntity(entity);
                     httpClient.execute(request);
                 } catch (ClientProtocolException e) {
