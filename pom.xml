@@ -6,7 +6,7 @@
 
     <groupId>us.shirecraft</groupId>
     <artifactId>TreasureHunt</artifactId>
-    <version>0.7.4</version>
+    <version>0.7.5</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -46,6 +46,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20251224</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>

@@ -7,7 +7,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -19,6 +18,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.json.JSONObject;
 import us.shirecraft.treasurehunt.items.christmas.*;
 import us.shirecraft.treasurehunt.items.easter.*;
 import us.shirecraft.treasurehunt.items.halloween.*;
@@ -29,6 +29,7 @@ import us.shirecraft.treasurehunt.items.party.RainbowCake;
 import us.shirecraft.treasurehunt.items.thanksgiving.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class TreasureHunt extends JavaPlugin {
@@ -286,23 +287,22 @@ public class TreasureHunt extends JavaPlugin {
             final String playerUuid = player.getUniqueId().toString();
             final String playerName = player.getName();
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-                String payload
-                        = "data={"
-                        + "\"uuid\":\"" + playerUuid + "\","
-                        + "\"player_name\":\""+ playerName +"\","
-                        + "\"item\":\"" + treasureType + "\","
-                        + "\"hunt_type\":\"" + huntType + "\","
-                        + "\"region\":\"" + regionName + "\","
-                        + "\"world\":\"" + worldName + "\""
-                        + "}";
+                final var payloadMap = new HashMap<String, String>();
+                payloadMap.put("uuid", playerUuid);
+                payloadMap.put("player_name", playerName);
+                payloadMap.put("item", treasureType);
+                payloadMap.put("hunt_type", huntType);
+                payloadMap.put("region", regionName);
+                payloadMap.put("world", worldName);
+                final var payload = new JSONObject(payloadMap);
 
-                StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_JSON);
+            StringEntity entity = new StringEntity(payload.toString(), StandardCharsets.UTF_8);
 
-                try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-                    HttpPost request = new HttpPost(endpoint);
-                    request.setHeader("Accept", "application/json");
-                    request.setHeader("Content-type", "application/json");
-                    request.setEntity(entity);
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+                HttpPost request = new HttpPost(endpoint);
+                request.setHeader("Accept", "application/json");
+                request.setHeader("Content-type", "application/json; charset=UTF-8");
+                request.setEntity(entity);
                     httpClient.execute(request);
                 } catch (ClientProtocolException e) {
                     getLogger().warning(" ! Encountered ClientProtocolException when attempting to transmit data");
