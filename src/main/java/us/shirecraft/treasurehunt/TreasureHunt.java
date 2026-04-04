@@ -300,6 +300,8 @@ public class TreasureHunt extends JavaPlugin {
 
                 try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
                     HttpPost request = new HttpPost(endpoint);
+                    request.setHeader("Accept", "application/json");
+                    request.setHeader("Content-type", "application/json");
                     request.setEntity(entity);
                     httpClient.execute(request);
                 } catch (ClientProtocolException e) {
