@@ -296,7 +296,7 @@ public class TreasureHunt extends JavaPlugin {
                         + "\"world\":\"" + worldName + "\""
                         + "}";
 
-                StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
+                StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_JSON);
 
                 try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
                     HttpPost request = new HttpPost(endpoint);
