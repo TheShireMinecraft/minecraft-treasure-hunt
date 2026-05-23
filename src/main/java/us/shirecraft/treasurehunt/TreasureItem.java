@@ -83,7 +83,7 @@ public class TreasureItem implements Comparable<TreasureItem> {
         _item.setItemMeta(headMeta);
 
         // Add custom NBT tags
-        _nbtItem = new NBTItem(_item);
+        _nbtItem = new NBTItem(_item, false);
         _nbtItem.setString("TreasureType", _name);
         _nbtItem.setString("TreasureHuntType", _huntType);
         _nbtItem.setBoolean("Unbreakable", true);

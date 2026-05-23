@@ -29,7 +29,7 @@ public class TreasureListener implements Listener {
             return;
         }
         if(ev.getEntity() instanceof Player player) {
-            NBTItem nbtItem = new NBTItem(is);
+            NBTItem nbtItem = new NBTItem(is, false);
             String huntType = plugin.validateHuntType(nbtItem.getString("TreasureHuntType"));
             String treasureType = nbtItem.getString("TreasureType");
             String regionName = nbtItem.getString("TreasureHuntRegion");
@@ -175,7 +175,7 @@ public class TreasureListener implements Listener {
         if(is.getType() != Material.PLAYER_HEAD) {
             return false;
         }
-        NBTItem nbtItem = new NBTItem(is);
+        NBTItem nbtItem = new NBTItem(is, false);
         return nbtItem.getKeys().contains("TreasureType");
     }
 
