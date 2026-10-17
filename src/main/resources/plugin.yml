@@ -1,8 +1,8 @@
 main: us.shirecraft.treasurehunt.TreasureHunt
 name: TreasureHunt
-version: '0.8.1'
+version: '0.8.2'
 description: "Treasure hunt using WorldGuard regions"
-api-version: 1.21
+api-version: 26.3
 load: POSTWORLD
 author: Blitheness
 website: shirecraft.us
