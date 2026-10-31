@@ -85,7 +85,7 @@ public class TreasureListener implements Listener {
 
                 CaveSpider spider = (CaveSpider) world.spawnEntity(treasureLocation, EntityType.CAVE_SPIDER);
                 spider.setTicksLived(1);
-                world.spawnParticle(Particle.FLASH, spider.getLocation(), 2);
+                world.spawnParticle(Particle.FLASH, spider.getLocation(), 2, Color.RED);
                 world.playSound(spider.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1, 1);
 
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -93,7 +93,7 @@ public class TreasureListener implements Listener {
                     if(null == spider || null == world || null == player) {
                         return;
                     }
-                    world.spawnParticle(Particle.FLASH, spider.getLocation(), 2);
+                    world.spawnParticle(Particle.FLASH, spider.getLocation(), 2, Color.ORANGE);
                     world.playSound(spider.getLocation(), Sound.ENTITY_SPIDER_HURT, 1, 1);
                     spider.remove();
                 }, 80);
@@ -101,11 +101,8 @@ public class TreasureListener implements Listener {
             if(getRandom(1,100) <= 10 && huntType.equals("christmas") && treasureType.equals("Snowman")) {
                 player.sendMessage("§a ** The snowman sprung to life before you could collect it!");
 
-                try {
-                    world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 2);
-                } catch (Exception e) {
-                    plugin.getLogger().warning("Could not spawn snowman particle for " + player.getName());
-                }
+                var spell = new Particle.Spell(Color.WHITE, 1f);
+                world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 2, spell);
                 ev.getItem().remove();
 
                 Location spawnSnowmanLoc = treasureLocation.clone();
@@ -145,12 +142,9 @@ public class TreasureListener implements Listener {
                 }, 40);
             }
             else {
-                try {
-                    player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
-                    world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 5);
-                } catch(Exception e) {
-                    plugin.getLogger().warning("Could not play treasure found effects for " + player.getName());
-                }
+                player.playNote(player.getLocation(), Instrument.XYLOPHONE, Note.sharp(1, Note.Tone.F));
+                var spell = new Particle.Spell(Color.WHITE, 1f);
+                world.spawnParticle(Particle.INSTANT_EFFECT, treasureLocation, 5, spell);
                 ev.getItem().remove();
                 plugin.sendToWebServer(
                     player,
