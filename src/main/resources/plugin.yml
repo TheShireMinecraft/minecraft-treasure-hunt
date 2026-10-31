@@ -1,6 +1,6 @@
 main: us.shirecraft.treasurehunt.TreasureHunt
 name: TreasureHunt
-version: '0.8.3'
+version: '0.8.4'
 description: "Treasure hunt using WorldGuard regions"
 api-version: 26.3
 load: POSTWORLD
@@ -9,6 +9,8 @@ website: shirecraft.us
 depend:
   - NBTAPI
   - WorldGuard
+libraries:
+  - org.json:json:20260814
 prefix: TreasureHunt
 commands:
   treasurehunt:
